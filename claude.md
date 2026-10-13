@@ -172,8 +172,9 @@ Each project needs: a clear README, architecture notes, setup instructions, test
 
 - **Last updated:** 13 October 2026
 - **Current phase:** Phase 1
-- **Current week/day:** Week 1, Day 1 (13 October 2026)
-- **Setup done:** Node.js, VS Code, Git, project folder, GitHub remote added (`christian-nc/js-learning`)
+- **Current week/day:** Week 1, Day 1 complete (13 October 2026). Day 2 is 14 October 2026.
+- **Setup done:** Node.js, VS Code, Git, project folder, GitHub repo (`christian-nc/js-learning`), first commit pushed
 - **Done so far:** variables, template strings, operators, `if/else`, `for` loops, temperature converter, price and tax calculation in kobo (`day01.js`, `exercises01.js`)
-- **Still to do in Week 1:** FizzBuzz, number-guessing game
-- **Next step:** make the first commit and push to GitHub (nothing is committed yet), then FizzBuzz
+- **Needs more practice:** `if` and `for` loops (noted in `LEARNING.md` on Day 1)
+- **Still to do in Week 1:** FizzBuzz (Day 2), number-guessing game (Day 3)
+- **Next step:** Day 2 class: follow `day02-plan.md` and work in `exercises02.js`

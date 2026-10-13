@@ -13,7 +13,7 @@ The roadmap is in `claude.md`.
 **What I learned (in my own words):**
 **What confused me / errors I hit:**
 **Questions for next time:**
-**Committed to Git:** yes / no
+**Committed to Git:** yes
 ```
 
 ---
@@ -26,14 +26,15 @@ The roadmap is in `claude.md`.
 - `day01.js`: prints my name, country, and goal
 - `exercises01.js`: Celsius to Fahrenheit converter, price x quantity with 7.5% tax, adult/minor check, counting 1-10, even numbers 1-10, the same total worked out in kobo
 
-**What I learned (in my own words):**
+**What I learned (in my own words)I learnt basic payment errors and how to fix decimal errors, the if loop and how to use const, let, still at the beginning part. very excited:**
 
-**What confused me / errors I hit:**
+**What confused me / errors I hit: the if and for loop; getting the hang of it now**
+
 - `git push -u origin main` failed because the repo had no commits yet
 
 **Questions for next time:**
 
-**Committed to Git:** no
+**Committed to Git:** yes
 
 ---
 
