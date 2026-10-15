@@ -68,11 +68,11 @@ Rules for today:
 
 1. Ask Claude: "Review `exercises02.js`" (bugs, habits, edge cases).
 2. Answer these out loud or in writing, without looking:
-   - What does `typeof "42"` give, and why does that matter for a payment amount?
-   - What is the difference between `=`, `==`, and `===`?
-   - In a `for` loop, which part runs only once?
-   - In FizzBuzz, why does the order of the checks matter?
-   - When would I choose `while` over `for`?
+   - What does `typeof "42"` give, and why does that matter for a payment amount? typeof "42" returns "string". the quotation marks makes it a string. it matters because If you receive a payment amount as a string and try to do math with it, JavaScript will do string concatenation instead of addition
+   - What is the difference between `=`, `==`, and `===`? = assigns a value to a variable, == checks if two values are equal, and it also do type coercion first. It tries to convert them to the same type before comparing, === checks if two values are equal without type coercion. Both the value and the data type must be exactly the same
+   - In a `for` loop, which part runs only once? The initialization part runs exactly once before the loop starts
+   - In FizzBuzz, why does the order of the checks matter?If you check for 3 first, a number like 15 will trigger the "Fizz" condition. The code will print "Fizz" and move on to the next number, completely skipping the "FizzBuzz" condition.
+   - When would I choose `while` over `for`? when the number of iterations is unknown and the loop has to continue running until a specific condition changes
 3. Add a Day 2 entry to `LEARNING.md`.
 4. Commit and push:
 
