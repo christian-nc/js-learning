@@ -32,7 +32,7 @@ The roadmap is in `claude.md`.
 - **Questions for next time:** 
 - **Committed to Git:** yes
 
-### Day 3 — 15 October 2026
+### Day 2 — 15 October 2026
 
 - **Topics:** JavaScript types and `typeof`, truthy/falsy values, strict equality (`===`), `NaN`, `if/else if` chains, ternary operators, and loops.
 - **What I worked on:** `exercises02.js` — practising conditions, a grade checker, a transaction checker, and rewriting/tracing loops.
@@ -41,6 +41,15 @@ The roadmap is in `claude.md`.
 - **Questions for next time:** None.
 - **Committed to Git:** yes
 
+
+### Day 3 — 16 October 2026
+
+- **Topics** : Random numbers with Math.random() and Math.floor(), terminal input with readline, typeof, converting input with Number(), validating input with Number.isNaN(), checking whole numbers and ranges, while loops, and replay logic.
+- **What I worked on:** exercises03.js — printing 10 random numbers from 1–100, asking for my name and age, validating number input, and building a number-guessing game with high/low hints, a 7-attempt limit, and a play-again option.
+- **What I learned**: Math.floor(Math.random() * 100) + 1 gives a whole number from 1 to 100. Answers from rl.question() are strings, so I need Number() to convert numeric input. Number("") gives 0, so I should check for empty input separately. Number.isNaN() helps identify invalid numeric input, and I should only count guesses that are whole numbers between 1 and 100.
+- **What confused me / errors I hit:** I had to think carefully about empty input and why it should not be accepted as zero. I also worked through the replay loop so a new game starts when the player enters y, including uppercase or lowercase.
+- **Questions for next time:** Review the replay logic and make sure the exercises run cleanly from start to finish.
+- **Committed to Git:** yes
 ---
 
 ## Weekly quiz scores
