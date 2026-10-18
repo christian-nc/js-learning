@@ -29,7 +29,7 @@ The roadmap is in `claude.md`.
 - **What I learned:** I learned the basics of payment calculations, avoiding decimal errors, `if` statements, and using `let` and `const`. I'm still at the beginning, but I'm excited.
 - **What confused me / errors I hit:** I found `if` statements and `for` loops confusing at first, but I'm getting the hang of them.
 - **Other note:** `git push -u origin main` failed because the repository had no commits yet.
-- **Questions for next time:** 
+- **Questions for next time:**
 - **Committed to Git:** yes
 
 ### Day 2 — 15 October 2026
@@ -41,7 +41,6 @@ The roadmap is in `claude.md`.
 - **Questions for next time:** None.
 - **Committed to Git:** yes
 
-
 ### Day 3 — 16 October 2026
 
 - **Topics** : Random numbers with Math.random() and Math.floor(), terminal input with readline, typeof, converting input with Number(), validating input with Number.isNaN(), checking whole numbers and ranges, while loops, and replay logic.
@@ -50,11 +49,25 @@ The roadmap is in `claude.md`.
 - **What confused me / errors I hit:** I had to think carefully about empty input and why it should not be accepted as zero. I also worked through the replay loop so a new game starts when the player enters y, including uppercase or lowercase.
 - **Questions for next time:** Review the replay logic and make sure the exercises run cleanly from start to finish.
 - **Committed to Git:** yes
+
+
+### Day 4 — 17 October 2026
+
+- **Topics** :  Input validation, Number(), Number.isNaN(), Number.isFinite(), checking positive amounts, and handling empty input.
+- **What I worked on:** exercises04.js — practising numeric input validation and checking transaction amounts.
+- **What I learned**: I learned that converting input with Number() can turn an empty string or spaces into 0. I need to check for empty input separately and validate the amount before using it.
+- **What confused me / errors I hit:** 
+1. Why Number.isNaN() alone does not catch empty input after conversion
+2. When to use Number.isFinite() versus Number.isNaN().
+3. How to make sure an amount is a valid, positive number before approving a transaction.
+- **Questions for next time:** None
+- **Committed to Git:** yes
+
+---
 ---
 
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit |
-|------|------------------|-------------------|
-| 1 | | |
-
+| ---- | ---------------- | ----------------- |
+| 1    |           5       |        -           |
