@@ -3,6 +3,7 @@
 **Theme:** decisions and repetition. Yesterday `if` and `for` felt shaky, so today is about making them solid before adding anything big.
 
 **By the end of today I can:**
+
 - Say what type a value is (`string`, `number`, `boolean`, `undefined`, `null`) and check it with `typeof`
 - Explain why `===` is used instead of `==`
 - Combine conditions with `&&`, `||`, `!`
@@ -16,13 +17,13 @@
 
 Read these on javascript.info (The JavaScript language > JavaScript Fundamentals):
 
-| Minutes | Chapter | Read for |
-|---------|---------|----------|
-| 10 | Data types | the 5 types above, `typeof` |
-| 10 | Comparisons | `===` vs `==`, comparing a string to a number |
-| 10 | Conditional branching: if, '?' | `else if`, truthy and falsy values |
-| 10 | Logical operators | `&&`, `||`, `!` |
-| 20 | Loops: while and for | the 3 parts of a `for` loop, `while`, `break`, `continue` |
+| Minutes | Chapter                        | Read for                                                  |
+| ------- | ------------------------------ | --------------------------------------------------------- |
+| 10      | Data types                     | the 5 types above, `typeof`                               |
+| 10      | Comparisons                    | `===` vs `==`, comparing a string to a number             |
+| 10      | Conditional branching: if, '?' | `else if`, truthy and falsy values                        |
+| 10      | Logical operators              | `&&`, `                                                   |     | `, `!` |
+| 20      | Loops: while and for           | the 3 parts of a `for` loop, `while`, `break`, `continue` |
 
 Type the examples into a scratch file and run them with `node`. Don't only read.
 
@@ -30,7 +31,7 @@ Type the examples into a scratch file and run them with `node`. Don't only read.
 
 ```js
 for (let i = 1; i <= 3; i++) {
-    console.log(i);
+  console.log(i);
 }
 ```
 
@@ -47,17 +48,18 @@ An `if` is not a loop. It checks its condition once and runs its block zero or o
 
 Work in `exercises02.js`. Each exercise is described there in comments. Write the code under each comment, run `node exercises02.js` often, and fix one error at a time.
 
-| # | Exercise | Rough time |
-|---|----------|-----------|
-| 1 | Type detective: predict, then check with `typeof` | 10 |
-| 2 | Loop tracing on paper, then confirm | 10 |
-| 3 | Grade calculator (`else if` chain) | 15 |
-| 4 | Transaction check (`&&`, `||`) | 15 |
-| 5 | Sum of 1 to 100 (`for`, then `while`) | 10 |
-| 6 | Multiplication table | 10 |
-| 7 | **FizzBuzz** | 20 |
+| #   | Exercise                                          | Rough time |
+| --- | ------------------------------------------------- | ---------- |
+| 1   | Type detective: predict, then check with `typeof` | 10         |
+| 2   | Loop tracing on paper, then confirm               | 10         |
+| 3   | Grade calculator (`else if` chain)                | 15         |
+| 4   | Transaction check (`&&`, `                        |            | `)  | 15  |
+| 5   | Sum of 1 to 100 (`for`, then `while`)             | 10         |
+| 6   | Multiplication table                              | 10         |
+| 7   | **FizzBuzz**                                      | 20         |
 
 Rules for today:
+
 - Try for at least 10 minutes before asking for a hint.
 - Ask Claude for a **hint**, not the answer.
 - If an error appears, read the message and the line number first, then ask.
