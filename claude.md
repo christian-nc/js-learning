@@ -16,7 +16,7 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 - Review my code for bugs, bad habits, security issues, and missing edge cases, without rewriting everything.
 - At the end of each week, quiz me with 5 questions on that week's topics.
 - From Phase 4 onward, you can scaffold and write tests with me, but I must be able to explain every line I commit.
-- Explain *why*, not only *how*.
+- Explain _why_, not only _how_.
 - Payment code handles money, so always point out failure cases, security risks, and what could go wrong.
 - Use sandbox/test mode only. Never use real card data.
 
@@ -24,10 +24,10 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 
 ## Daily structure (3 hours)
 
-| Time | Activity |
-|------|----------|
-| 60 min | Learn (course, docs, reading) |
-| 90 min | Build (write code myself) |
+| Time   | Activity                                                                              |
+| ------ | ------------------------------------------------------------------------------------- |
+| 60 min | Learn (course, docs, reading)                                                         |
+| 90 min | Build (write code myself)                                                             |
 | 30 min | Review (ask Claude to explain, quiz, and review; update `LEARNING.md`; commit to Git) |
 
 ---
@@ -36,22 +36,24 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 
 **Setup:** Node.js (LTS), VS Code, Git, GitHub account, `js-learning` repo.
 
-| Week | Topics | Exercises |
-|------|--------|-----------|
-| 1 | Variables (`let`, `const`), data types, operators, conditionals, loops, running code with `node` | FizzBuzz, temperature converter, number-guessing game |
-| 2 | Functions, arrow functions, scope, arrays (`map`, `filter`, `reduce`), objects | Function library (average, max, word counter), inventory tracker |
-| 3 | Destructuring, spread, template strings, modules (`import`/`export`), `try/catch`, `fs` module, JSON | CLI expense tracker saving to a JSON file |
-| 4 | Async JavaScript: callbacks, Promises, `async/await`, event loop, `Promise.all` | Simulated delayed operations, sequential vs parallel tasks |
-| 5 | `fetch` in Node, reading API docs, handling errors and bad responses, Postman/curl | CLI tool pulling data from a free public API |
-| 6 | Git branching, pull requests, npm, `package.json`, consolidation | Polished CLI currency converter with README and error handling |
+| Week | Topics                                                                                               | Exercises                                                        |
+| ---- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| 1    | Variables (`let`, `const`), data types, operators, conditionals, loops, running code with `node`     | FizzBuzz, temperature converter, number-guessing game            |
+| 2    | Functions, arrow functions, scope, arrays (`map`, `filter`, `reduce`), objects                       | Function library (average, max, word counter), inventory tracker |
+| 3    | Destructuring, spread, template strings, modules (`import`/`export`), `try/catch`, `fs` module, JSON | CLI expense tracker saving to a JSON file                        |
+| 4    | Async JavaScript: callbacks, Promises, `async/await`, event loop, `Promise.all`                      | Simulated delayed operations, sequential vs parallel tasks       |
+| 5    | `fetch` in Node, reading API docs, handling errors and bad responses, Postman/curl                   | CLI tool pulling data from a free public API                     |
+| 6    | Git branching, pull requests, npm, `package.json`, consolidation                                     | Polished CLI currency converter with README and error handling   |
 
 **Skills to practise throughout Phase 1 (not separate weeks):**
+
 - **Debugging:** reading error messages and stack traces, `console.log` tracing, the VS Code debugger (breakpoints, stepping)
 - **Number pitfalls:** why `0.1 + 0.2 !== 0.3`, `Number` vs string input, `NaN`, rounding. This is the reason money is stored as integers later.
 - **Dates and time zones:** `Date` basics, UTC vs local time, ISO 8601 strings (payment and settlement records depend on these)
 - **Code quality:** ESLint and Prettier set up by Week 3, meaningful names, small functions
 
 **Week 6 checkpoint (do these without help):**
+
 1. Write an async function that fetches JSON from an API and handles a failed request.
 2. Explain Promise vs `async/await`.
 3. Use `map` and `filter` on an array of objects.
@@ -73,6 +75,7 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 - Reading and writing API documentation: OpenAPI/Swagger basics
 
 **Projects:**
+
 - A REST API (for example, a notes or products API) with full CRUD
 - A client script that consumes a public API and handles errors, timeouts, and rate limits
 
@@ -117,6 +120,7 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 ## Phase 5: Payments Specialization (Weeks 21-27)
 
 **Concepts:**
+
 - Payment methods: cards, bank transfers, mobile money, wallets
 - Authorization vs capture, settlement, refunds, chargebacks, fees, currencies
 - Storing money as integers in the smallest unit (never floats)
@@ -131,6 +135,7 @@ I'm learning to become an **API Integration Engineer / Payment Integration Devel
 - Data protection basics for customer data (Nigeria's NDPA, plus GDPR for international roles)
 
 **Hands-on (test mode only):**
+
 1. **Stripe** (best documentation, so best for learning)
 2. A regional gateway for my market (for example Paystack or Flutterwave)
 
@@ -170,11 +175,11 @@ Each project needs: a clear README, architecture notes, setup instructions, test
 
 ## Current status
 
-- **Last updated:** 13 October 2026
+- **Last updated:** 17 October 2026
 - **Current phase:** Phase 1
-- **Current week/day:** Week 1, Day 1 complete (13 October 2026). Day 2 is 14 October 2026.
+- **Current week/day:** Week 1 complete (17 October 2026). Week 2 starts next.
 - **Setup done:** Node.js, VS Code, Git, project folder, GitHub repo (`christian-nc/js-learning`), first commit pushed
-- **Done so far:** variables, template strings, operators, `if/else`, `for` loops, temperature converter, price and tax calculation in kobo (`day01.js`, `exercises01.js`)
-- **Needs more practice:** `if` and `for` loops (noted in `LEARNING.md` on Day 1)
-- **Still to do in Week 1:** FizzBuzz (Day 2), number-guessing game (Day 3)
-- **Next step:** Day 2 class: follow `day02-plan.md` and work in `exercises02.js`
+- **Done so far:** variables, template strings, operators, `if/else`, `else if`, `for` and `while` loops, types and `typeof`, `NaN`, FizzBuzz, temperature converter, price and tax calculation in kobo, `readline` input, input validation with `Number()` and `Number.isNaN()`, number-guessing game with hints, 7-try limit and play-again (`day01.js`, `exercises01.js`, `exercises02.js`, `exercises03.js`, `exercises04.js`)
+- **Needs more practice:** explaining _why_ input must be converted (string vs number comparison, e.g. `"10" < "9"`); writing comments that record design decisions (for example why invalid guesses are not counted); keeping `if`/`for` loops and indentation tidy.  validating input before Number(), using Number.isFinite / Number.isInteger, and indentation.
+- **Still to do in Week 1:** Day 4 wrap-up (revisit shaky topics from Days 1-3, tidy the guessing game, write a version 1 of the game if wanted), then the Week 1 quiz (5 questions)
+- **Next step:** Day 4 class: Claude prepares `day04-plan.md` and `exercises04.js`; Week 2 (functions, arrays, objects) starts after the quiz
