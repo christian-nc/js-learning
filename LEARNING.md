@@ -64,6 +64,21 @@ The roadmap is in `claude.md`.
 - **Committed to Git:** yes
 
 ---
+
+## Week 2
+
+### Day 1 — 19 October 2026
+
+- **Topics** :  Functions, parameters, return, default parameters, input validation, regular expressions, money limits, and formatting Naira amounts.
+- **What I worked on:** functions to add and return values, greet a user, validate kobo amounts, calculate tax, format Naira, and parse a guessing-game input.
+- **What I learned**: A function without return gives back undefined. Returning a value lets the rest of the program reuse it and makes testing easier. Number.isSafeInteger() does not enforce my own maximum amount, so I also need the MAX_KOBO limit. I should reject an invalid tax rate such as Infinity, and use trim() before checking the input text so spaces around a valid guess can be accepted without allowing formats like 1e1 or 0x1F.
+- **What confused me / errors I hit:** 
+1. trim() order: I needed to trim the input before checking it against the digits-only pattern. That lets " 42 " work while rejecting unwanted numeric formats.
+2. Infinity tax rate: Checking only that the rate is not negative is not enough; Infinity must also be rejected with Number.isFinite().
+3. Maximum amount: A positive safe integer can still be above my business limit, so isValidAmount() must check that the amount is no greater than MAX_KOBO.
+- **Questions for next time:** Revisit the three questions above and keep testing edge cases for money amounts, tax rates, and formatted output.
+- **Committed to Git:** yes
+
 ---
 
 ## Weekly quiz scores
@@ -71,3 +86,4 @@ The roadmap is in `claude.md`.
 | Week | Score (out of 5) | Topics to revisit |
 | ---- | ---------------- | ----------------- |
 | 1    |           5       |        -           |
+| 2    |                   |                    |

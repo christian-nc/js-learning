@@ -177,9 +177,9 @@ Each project needs: a clear README, architecture notes, setup instructions, test
 
 - **Last updated:** 17 October 2026
 - **Current phase:** Phase 1
-- **Current week/day:** Week 1 complete (17 October 2026). Week 2 starts next.
+- **Current week/day:** Week 1 complete, quiz 5/5 (17 October 2026). Week 2, Day 1 (functions) prepared: `day05-plan.md` and `exercises05.js`.
 - **Setup done:** Node.js, VS Code, Git, project folder, GitHub repo (`christian-nc/js-learning`), first commit pushed
 - **Done so far:** variables, template strings, operators, `if/else`, `else if`, `for` and `while` loops, types and `typeof`, `NaN`, FizzBuzz, temperature converter, price and tax calculation in kobo, `readline` input, input validation with `Number()` and `Number.isNaN()`, number-guessing game with hints, 7-try limit and play-again (`day01.js`, `exercises01.js`, `exercises02.js`, `exercises03.js`, `exercises04.js`)
 - **Needs more practice:** explaining _why_ input must be converted (string vs number comparison, e.g. `"10" < "9"`); writing comments that record design decisions (for example why invalid guesses are not counted); keeping `if`/`for` loops and indentation tidy.  validating input before Number(), using Number.isFinite / Number.isInteger, and indentation.
-- **Still to do in Week 1:** Day 4 wrap-up (revisit shaky topics from Days 1-3, tidy the guessing game, write a version 1 of the game if wanted), then the Week 1 quiz (5 questions)
-- **Next step:** Day 4 class: Claude prepares `day04-plan.md` and `exercises04.js`; Week 2 (functions, arrays, objects) starts after the quiz
+- **Week 2 plan:** Day 1 functions (parameters, `return`, defaults); Day 2 arrow functions and scope; Day 3 arrays, `map`, `filter`; Day 4 `reduce` and objects; Day 5 function library (average, max, word counter); Day 6 inventory tracker and Week 2 quiz
+- **Next step:** do Week 2 Day 1 (`day05-plan.md`, `exercises05.js`), then ask Claude to review it and add a Day 1 entry to `LEARNING.md`
