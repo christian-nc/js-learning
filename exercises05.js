@@ -26,11 +26,11 @@ function withReturn(a, b) {
 console.log(noReturn(2, 3));
 //5
 console.log(withReturn(2, 3));
-// Nan
+// NaN
 console.log(withReturn(2));
 //5
 console.log(withReturn(2, 3, 4));
-//23
+//"23"
 console.log(withReturn("2", 3)); // This is dangerous because concatening numbers like this affects payment and can ruin the whole calculation
 // Then answer in a comment: what does a function give back when it has no `return`?
 // it gives back undefined
@@ -202,7 +202,7 @@ check("1e1", parseGuess("1e1"), null);
 check("0x1F", parseGuess("0x1F"), null);
 // will return null
 check("+5", parseGuess("+5"), null);
-// will return 42
+// will return 42. it is a design decision to remove preceding zero
 check("042", parseGuess("042"), 42);
 // will return 42 cos i TRIMMED
 check(" 42 ", parseGuess(" 42 "), 42);
