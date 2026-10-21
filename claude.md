@@ -175,11 +175,11 @@ Each project needs: a clear README, architecture notes, setup instructions, test
 
 ## Current status
 
-- **Last updated:** 17 October 2026
+- **Last updated:** 20 October 2026
 - **Current phase:** Phase 1
-- **Current week/day:** Week 1 complete, quiz 5/5 (17 October 2026). Week 2, Day 1 (functions) prepared: `day05-plan.md` and `exercises05.js`.
-- **Setup done:** Node.js, VS Code, Git, project folder, GitHub repo (`christian-nc/js-learning`), first commit pushed
-- **Done so far:** variables, template strings, operators, `if/else`, `else if`, `for` and `while` loops, types and `typeof`, `NaN`, FizzBuzz, temperature converter, price and tax calculation in kobo, `readline` input, input validation with `Number()` and `Number.isNaN()`, number-guessing game with hints, 7-try limit and play-again (`day01.js`, `exercises01.js`, `exercises02.js`, `exercises03.js`, `exercises04.js`)
-- **Needs more practice:** explaining _why_ input must be converted (string vs number comparison, e.g. `"10" < "9"`); writing comments that record design decisions (for example why invalid guesses are not counted); keeping `if`/`for` loops and indentation tidy.  validating input before Number(), using Number.isFinite / Number.isInteger, and indentation.
-- **Week 2 plan:** Day 1 functions (parameters, `return`, defaults); Day 2 arrow functions and scope; Day 3 arrays, `map`, `filter`; Day 4 `reduce` and objects; Day 5 function library (average, max, word counter); Day 6 inventory tracker and Week 2 quiz
-- **Next step:** do Week 2 Day 1 (`day05-plan.md`, `exercises05.js`), then ask Claude to review it and add a Day 1 entry to `LEARNING.md`
+- **Current week/day:** Week 2, Day 2 complete (arrow functions, scope, closures). Week 2, Day 3 (arrays, `map`, `filter`) prepared: `day07-plan.md` and `exercises07.js`.
+- **Setup done:** Node.js, VS Code, Git, project folder, GitHub repo (`christian-nc/js-learning`), first commit pushed, Prettier
+- **Done so far:** variables, template strings, operators, `if/else`, loops, types and `typeof`, `NaN`, FizzBuzz, temperature converter, kobo price and tax maths, `readline` input and validation, number-guessing game (Week 1); functions, `return`, default parameters, money helpers (`isValidAmount`, `calculateTax`, `formatNaira`, `MAX_KOBO`), `parseGuess`, own `check`/`checkThrows` test helpers (Day 1); function declarations vs expressions vs arrows, hoisting, block vs function scope, `let` vs `var`, closures (`makeCounter`, `makeTaxCalculator`, `makeTotal`), fixing shared state (Day 2)
+- **Needs more practice:** tracing scope and closures step by step (does a closure remember a value or a variable?); keeping one rule in one place (tax-rate rule differs between `calculateTax` and `makeTaxCalculator`); deleting stale comments after a fix; time-boxing (Day 2 ran well past 3 hours, so ask for a hint after 20 minutes stuck)
+- **Week 2 plan:** Day 1 functions (done); Day 2 arrow functions and scope (done); Day 3 arrays, `map`, `filter`; Day 4 `reduce` and objects; Day 5 function library (average, max, word counter); Day 6 inventory tracker and Week 2 quiz
+- **Next step:** do Week 2 Day 3 (`day07-plan.md`, `exercises07.js`), then ask Claude to review it and add a Day 3 entry to `LEARNING.md`

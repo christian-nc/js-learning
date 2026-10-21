@@ -98,6 +98,22 @@ The roadmap is in `claude.md`.
 
 ---
 
+### Day 3 — 21 October 2026
+
+- **Topics** : Arrays, array indexes and .length, array references, map(), filter(), chaining array methods, and tracing closures and scope.
+- **What I worked on:** exercises07.js — tracing closure behavior, reading and updating arrays, adding VAT with a loop and with map(), filtering transactions, chaining filter() and map(), and fixing array-transformation bugs.
+- **What I learned**: map() creates a new array by transforming each item, while filter() creates a new array containing only items that pass a condition. push() returns the new length, not the array. Two array literals with the same contents are still different arrays, but two variables can refer to the same array. A closure can use the current value of a variable it closes over, and let inside a loop is block-scoped.
+- **What confused me / errors I hit:**
+
+1. Silent wrong results vs errors: I want to get better at spotting when code returns a plausible but incorrect result instead of throwing an error.
+2. map() vs filter(): I want more practice choosing whether to transform every item or keep only items that match a condition, and understanding why the order matters when chaining them.
+3. Array references and closures: I want to practise tracing when variables refer to the same array and when a closure reads a variable that changes later.
+
+- **Questions for next time:** Practise tracing map() and filter() step by step, and check that invalid payment data fails clearly rather than producing a misleading result.
+- **Committed to Git:** yes
+
+---
+
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit |
