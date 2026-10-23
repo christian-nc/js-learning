@@ -114,6 +114,22 @@ The roadmap is in `claude.md`.
 
 ---
 
+### Day 3 — 23 October 2026
+
+- **Topics** : reduce(), objects and property access, array validation, converting CSV strings with map(Number), payment statuses, and building a daily summary.
+- **What I worked on:** xercises08.js — summing amounts with a loop and reduce(), totaling successful payments, counting transactions by status, fixing reduce bugs, converting CSV values, and creating summarizeDay().
+- **What I learned**: reduce() needs to return the updated accumulator each time. A function can give a wrong result without throwing an error, so I need tests that check the relationship between results, not just whether each function passes its own test. CSV values arrive as strings, so converting them with map(Number) is part of the path I need to test. The successful-payment total and status count must use the same rule for recognizing statuses. payment.field looks for the literal key "field", while payment[field] uses the value stored in the field variable.
+- **What confused me / errors I hit:**
+
+1. Silent wrong results vs errors: I need to check for plausible but incorrect results, not only thrown errors.
+2. Tracing object references: I need more practice following an object's property after it is changed.
+3. CSV conversion and validation: I need to remember that Number("") gives 0, and that conversion alone does not mean an amount is valid. I also found optional chaining (?.) and Set.has() unfamiliar; I have not reached those topics yet and should revisit them later.
+
+- **Questions for next time:** Practise tracing object properties and bracket notation, and review how to test that the daily summary agrees with the individual payment functions.
+- **Committed to Git:** yes
+
+---
+
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit |

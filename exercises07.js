@@ -257,7 +257,7 @@ checkList("succeeded formatted", succeededFormatted, [
 ]);
 
 // Question (comment): does the order matter? Would map-then-filter work for a)?
-// Yes, the order matters. map-then-filter will turn each transaction object into a string, such as "T1". Then filter() will return undefined due to being unable to find a t.status property on the string
+// Yes, the order matters. map-then-filter will turn each transaction object into a string, such as "T1". Then filter() will return an empty array [] due to being unable to find a t.status property on the string
 // Try it and explain what happens.
 const wrongFormatted = transactions
   .map((t) => t.id)
