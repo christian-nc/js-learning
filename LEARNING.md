@@ -114,7 +114,7 @@ The roadmap is in `claude.md`.
 
 ---
 
-### Day 3 — 23 October 2026
+### Day 4 — 23 October 2026
 
 - **Topics** : reduce(), objects and property access, array validation, converting CSV strings with map(Number), payment statuses, and building a daily summary.
 - **What I worked on:** xercises08.js — summing amounts with a loop and reduce(), totaling successful payments, counting transactions by status, fixing reduce bugs, converting CSV values, and creating summarizeDay().
@@ -126,6 +126,22 @@ The roadmap is in `claude.md`.
 3. CSV conversion and validation: I need to remember that Number("") gives 0, and that conversion alone does not mean an amount is valid. I also found optional chaining (?.) and Set.has() unfamiliar; I have not reached those topics yet and should revisit them later.
 
 - **Questions for next time:** Practise tracing object properties and bracket notation, and review how to test that the daily summary agrees with the individual payment functions.
+- **Committed to Git:** yes
+
+---
+
+### Day 5 — 26 October 2026
+
+- **Topics** : Function contracts, empty-input behavior, reduce(), object counting, safe-integer totals, array filtering, and testing that functions throw for the right reason.
+- **What I worked on:** library.js — writing average(), max(), largestTransaction(), and wordCount(); checking status totals with countsMatchTotal(); and testing empty lists, invalid values, ties, and large totals.
+- **What I learned**: A contract should say what a function accepts, returns, and does with empty or invalid input. average([]) and max([]) should throw instead of returning a misleading value, while wordCount("") can return {} because an empty string simply contains no words. sumReduce() must check the running total as well as each amount, because individually valid amounts can add up to a number JavaScript cannot safely represent. largestTransaction() should filter to successful payments, use max() to find the amount, and return the first transaction when there is a tie. wordCount() uses reduce() to build an object, lowercases words, and ignores empty pieces caused by extra spaces; punctuation is still attached to words for now.
+- **What confused me / errors I hit:**
+
+1. False-positive throw tests: checkThrows(testName, fn) expects the label first and the function second. Reversing the arguments caused a test to pass because it threw fn is not a function, not because the function under test behaved correctly. A big-list test also needs to run only after bigList has been declared; otherwise, a reference error can make the test pass for the wrong reason.
+2. Empty input contracts: I need to keep distinguishing functions where empty input is invalid (average() and max()) from a function where empty input is a valid, meaningful result (wordCount()).
+3. wordCount("paid, paid.") counts paid, and paid. as different keys. I want to learn how to normalize punctuation with a regular expression without accidentally changing words.
+
+- **Questions for next time:** punctuation cleanup with regular expressions.
 - **Committed to Git:** yes
 
 ---
