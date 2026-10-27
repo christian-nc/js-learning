@@ -147,7 +147,7 @@ The roadmap is in `claude.md`.
 
 ---
 
-### Day 5 — 27 October 2026
+### Day 6 — 27 October 2026
 
 - **Topics** : Map, destructuring, validating batch operations, and all-or-nothing updates.
 - **What I worked on:** inventory.js — checking stock movements in a first pass, simulating multiple movements for the same SKU with a Map, and applying the final stock changes only after every movement passes validation.
@@ -165,12 +165,7 @@ The roadmap is in `claude.md`.
 
 ## Weekly quiz scores
 
-| Week | Score (out of 5) | Topics to revisit   |
-| ---- | ---------------- | ------------------- |
-| 1    | 5                | -                   |
-| 2    | 4.5              | reduce() without an |
-
-                            initial value (why it throws); naming the bug before fixing it (Q5)
-
-| | | |  
-|
+| Week | Score (out of 5) | Topics to revisit                                                       |
+| ---- | ---------------- | ----------------------------------------------------------------------- |
+| 1    | 5                | -                                                                       |
+| 2    | 4.5              | reduce() without an initial value; naming the bug before fixing it (Q5) |
