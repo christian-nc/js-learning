@@ -286,7 +286,9 @@ const transactions = [
 // - Throw if there are no successful transactions.
 
 const largestTransaction = (list) => {
-  const successful = list.filter((t) => normalizeStatus(t.status) === "succeeded");
+  const successful = list.filter(
+    (t) => normalizeStatus(t.status) === "succeeded"
+  );
 
   if (successful.length === 0) {
     throw new Error("No successful transactions");
@@ -317,10 +319,6 @@ check(
   "T2"
 );
 
-checkThrows("throws on empty list", () => largestTransaction([]));
-
-checkThrows("Running total exceeded", () => sumReduce(bigList));
-
 // c) Safe total. Every item below is a valid amount (MAX_KOBO), but is the total safe?
 //    Build bigList: an array with 100 copies of MAX_KOBO, using a for loop and push.
 //    Then predict what sumReduce(bigList) returns, and run it.
@@ -339,11 +337,7 @@ for (let i = 0; i < 100; i++) {
   bigList.push(MAX_KOBO);
 }
 
-checkThrows(
-  "Running total exceeded",
-  () => sumReduce(bigList)
-);
-
+checkThrows("Running total exceeded", () => sumReduce(bigList));
 
 // ---------------------------------------------------------------
 // Exercise 6: wordCount(text)

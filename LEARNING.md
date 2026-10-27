@@ -143,12 +143,34 @@ The roadmap is in `claude.md`.
 
 - **Questions for next time:** punctuation cleanup with regular expressions.
 - **Committed to Git:** yes
+  **Note**: I will make sure "fixed" in the log means fixed in the file.
+
+---
+
+### Day 5 — 27 October 2026
+
+- **Topics** : Map, destructuring, validating batch operations, and all-or-nothing updates.
+- **What I worked on:** inventory.js — checking stock movements in a first pass, simulating multiple movements for the same SKU with a Map, and applying the final stock changes only after every movement passes validation.
+- **What I learned**: A Map can keep a simulated stock value for each SKU. When another movement targets the same SKU, I need to use the previously simulated value rather than the original stock. Separating validation/simulation from applying changes helps make a batch all-or-nothing.
+- **What confused me / errors I hit:**
+
+1. Map: I want more practice with has(), get(), and set(), especially when multiple movements update the same SKU.
+2. Destructuring: I want to get more comfortable reading values pulled from objects or arrays and understanding what each variable receives.
+3. All-or-nothing updates: I want to practise tracing why the first pass must not change real inventory, and how the second pass applies changes only after validation succeeds.
+
+- **Questions for next time:** race a batch with two movements for the same SKU, then follow the Map values after each movement.
+- **Committed to Git:** yes
 
 ---
 
 ## Weekly quiz scores
 
-| Week | Score (out of 5) | Topics to revisit |
-| ---- | ---------------- | ----------------- |
-| 1    | 5                | -                 |
-| 2    |                  |                   |
+| Week | Score (out of 5) | Topics to revisit   |
+| ---- | ---------------- | ------------------- |
+| 1    | 5                | -                   |
+| 2    | 4.5              | reduce() without an |
+
+                            initial value (why it throws); naming the bug before fixing it (Q5)
+
+| | | |  
+|
