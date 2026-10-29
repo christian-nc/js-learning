@@ -31,13 +31,13 @@ You'll write three functions: `average`, `max` and `wordCount`. Each one hides a
 
 ## 1. Learn (60 min)
 
-| Minutes | Topic                                                    | Read for                                                                                          |
-| ------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 15      | javascript.info: Object.keys, values, entries            | what each returns (always an array), and that you can then use `map`/`filter`/`reduce` on it      |
-| 15      | javascript.info: Strings                                 | `trim`, `toLowerCase`, `split`. Skip the Unicode sections at the end                               |
-| 10      | MDN: `String.prototype.split`                            | what `"".split(" ")` and `"a  b".split(" ")` return. Try them in `node` before reading the answer |
-| 10      | MDN: `Math.max` and `Math.round`                         | the return value of `Math.max()` with no arguments; how `Math.round` handles `.5`                  |
-| 10      | MDN: `Number.MAX_SAFE_INTEGER`                           | what "safe" means, and what happens to `9007199254740991 + 2`                                     |
+| Minutes | Topic                                         | Read for                                                                                          |
+| ------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 15      | javascript.info: Object.keys, values, entries | what each returns (always an array), and that you can then use `map`/`filter`/`reduce` on it      |
+| 15      | javascript.info: Strings                      | `trim`, `toLowerCase`, `split`. Skip the Unicode sections at the end                              |
+| 10      | MDN: `String.prototype.split`                 | what `"".split(" ")` and `"a  b".split(" ")` return. Try them in `node` before reading the answer |
+| 10      | MDN: `Math.max` and `Math.round`              | the return value of `Math.max()` with no arguments; how `Math.round` handles `.5`                 |
+| 10      | MDN: `Number.MAX_SAFE_INTEGER`                | what "safe" means, and what happens to `9007199254740991 + 2`                                     |
 
 Skip spread (`...`) for now. `Math.max(...list)` is Week 3, and today you'll see why you might not want it anyway.
 
@@ -49,15 +49,15 @@ Write down 3 things you are still unsure about. Bring them to the Review block.
 
 Work in `library.js`. Each exercise is described there in comments. It has `check`, `checkList` and `checkThrows`. Copy `MAX_KOBO`, `isValidAmount` and `sumReduce` from `exercises08.js` where it says so.
 
-| #   | Exercise                                            | Rough time |
-| --- | --------------------------------------------------- | ---------- |
-| 1   | Warm-up: predict-then-run traps                     | 10         |
-| 2   | Objects as lists: `Object.keys/values/entries`      | 10         |
-| 3   | The Day 4 self-check: counts add up to `count`      | 10         |
-| 4   | `average`: and the rounding decision                | 20         |
-| 5   | `max` and `largestTransaction`, plus a safe total   | 20         |
-| 6   | `wordCount`                                         | 15         |
-| 7   | Contracts and Think (comments only)                 | 5          |
+| #   | Exercise                                          | Rough time |
+| --- | ------------------------------------------------- | ---------- |
+| 1   | Warm-up: predict-then-run traps                   | 10         |
+| 2   | Objects as lists: `Object.keys/values/entries`    | 10         |
+| 3   | The Day 4 self-check: counts add up to `count`    | 10         |
+| 4   | `average`: and the rounding decision              | 20         |
+| 5   | `max` and `largestTransaction`, plus a safe total | 20         |
+| 6   | `wordCount`                                       | 15         |
+| 7   | Contracts and Think (comments only)               | 5          |
 
 Rules for today:
 

@@ -35,13 +35,13 @@ You'll build an inventory tracker that answers all three, then finish the week w
 
 ## 1. Learn (60 min)
 
-| Minutes | Topic                                                     | Read for                                                                                           |
-| ------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| 15      | javascript.info: Object references and copying            | "copied by reference". Stop before `structuredClone` and spread; that's Week 3                     |
-| 10      | MDN: `Array.prototype.find` and `findIndex`               | what each returns when nothing matches. That return value is today's trap                          |
-| 10      | MDN: `Array.prototype.some` and `every`                   | how they answer "is any / is every item OK?" with a boolean, and stop early                        |
-| 10      | Re-read your own `library.js` contracts                   | which rules (`isValidAmount`, `sumReduce`) you'll reuse, and what each one rejects                 |
-| 15      | Week 2 revision: your `LEARNING.md` Days 1-5              | the "confused me" items. The quiz will come from this week's topics                                |
+| Minutes | Topic                                          | Read for                                                                           |
+| ------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
+| 15      | javascript.info: Object references and copying | "copied by reference". Stop before `structuredClone` and spread; that's Week 3     |
+| 10      | MDN: `Array.prototype.find` and `findIndex`    | what each returns when nothing matches. That return value is today's trap          |
+| 10      | MDN: `Array.prototype.some` and `every`        | how they answer "is any / is every item OK?" with a boolean, and stop early        |
+| 10      | Re-read your own `library.js` contracts        | which rules (`isValidAmount`, `sumReduce`) you'll reuse, and what each one rejects |
+| 15      | Week 2 revision: your `LEARNING.md` Days 1-5   | the "confused me" items. The quiz will come from this week's topics                |
 
 Write down 3 things you are still unsure about. Bring them to the Review block.
 
@@ -51,16 +51,16 @@ Write down 3 things you are still unsure about. Bring them to the Review block.
 
 **First, a 5-minute fix in `library.js` (Exercise 0).** Then work in `inventory.js`. Each exercise is described there in comments.
 
-| #   | Exercise                                                     | Rough time |
-| --- | ------------------------------------------------------------ | ---------- |
-| 0   | Fix the two leftover tests in `library.js`                   | 5          |
-| 1   | Warm-up: trace an object through changes                     | 10         |
-| 2   | `findProduct`: never return `undefined` silently             | 10         |
-| 3   | `addStock` and `removeStock`: all-or-nothing                 | 20         |
-| 4   | `stockValue`: when a library rule doesn't fit                | 15         |
-| 5   | `lowStock`: `filter` + `map` report                          | 10         |
-| 6   | `applyMovements`: a batch that is all-or-nothing             | 15         |
-| 7   | Think (comments only)                                        | 5          |
+| #   | Exercise                                         | Rough time |
+| --- | ------------------------------------------------ | ---------- |
+| 0   | Fix the two leftover tests in `library.js`       | 5          |
+| 1   | Warm-up: trace an object through changes         | 10         |
+| 2   | `findProduct`: never return `undefined` silently | 10         |
+| 3   | `addStock` and `removeStock`: all-or-nothing     | 20         |
+| 4   | `stockValue`: when a library rule doesn't fit    | 15         |
+| 5   | `lowStock`: `filter` + `map` report              | 10         |
+| 6   | `applyMovements`: a batch that is all-or-nothing | 15         |
+| 7   | Think (comments only)                            | 5          |
 
 Rules for today:
 

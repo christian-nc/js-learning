@@ -83,19 +83,19 @@ const ids = ["T1", "T2", "T3"];
 console.log(ids.filter((id) => id.status === "succeeded"));
 // Why? (What is "T1".status? What does the comparison give for every item?)
 // "T1".status does not have a status property so javascript will evaluate it to undefined.
-// Because this comparison is false for every item in the array, filter excludes all of them and returns a new, empty array 
+// Because this comparison is false for every item in the array, filter excludes all of them and returns a new, empty array
 // In exercises07.js (Exercise 5) your comment says this "will return undefined".
 // Go back and correct that comment.
 // Question: in payment code, which is worse: a crash, or an empty list that looks
 // like "no successful payments today"? Why?
 // an empty list that silently looks like "no successful payments today" is worse than a crash
-// Why? because the system will continue to run with incorrect data. 
-// Business logic might proceed under the false assumption that zero payments were made. This can lead to orders not being fulfilled, 
+// Why? because the system will continue to run with incorrect data.
+// Business logic might proceed under the false assumption that zero payments were made. This can lead to orders not being fulfilled,
 // incorrect accounting and undetected bugs that might take days or weeks to discover
 
 // b) Yesterday's applySelectDiscount returned [4900, 2400, 900, 80, 100].
 //    1. Why was 100 left unchanged? Is 0 kobo a valid result after a 100 kobo discount?
-//  The 100kobo remains unchanged because it does not pass the > test. 
+//  The 100kobo remains unchanged because it does not pass the > test.
 //  If the business rule says a 100-kobo item can receive a 100-kobo discount, the resulting price of zero will be valid for this exercise.
 //    2. 80 was skipped quietly. Your own Exercise 8 answer said bad items should be
 //       kept and reported. Write applyDiscountStrict(prices) that does NOT quietly
@@ -104,17 +104,19 @@ console.log(ids.filter((id) => id.status === "succeeded"));
 
 // write applyDiscountStrict here
 
-// All-or-nothing discount. 
+// All-or-nothing discount.
 // One bad price rejects the whole batch. This is good because in payment that's often what you want
 // rather no discounts than apply half of them and end up unsure which were done
 function applyDiscountStrict(prices) {
   const discountedPrices = prices.map((price) => {
     if (price < 100 || !isValidAmount(price)) {
-      throw new Error(`Invalid price: ${price}. Prices below 100 do not qualify for a discount.`);
+      throw new Error(
+        `Invalid price: ${price}. Prices below 100 do not qualify for a discount.`
+      );
     }
 
     return price - 100;
-});
+  });
 
   return discountedPrices;
 }
@@ -178,7 +180,7 @@ console.log({ id: "P1" } === { id: "P1" });
 // For example, payment["payment-status"] works, but payment.payment-status does not mean that key.
 // 2. A typo like payment.amountkobo (small k) doesn't throw. What does it give, and
 //    what happens if that value goes into a total?
-//  it gives undefined and gives NaN when calculated into a total. Always better to validate a required missing payment before using it in a calculation 
+//  it gives undefined and gives NaN when calculated into a total. Always better to validate a required missing payment before using it in a calculation
 // 3. samePayment changed payment. Is that the same idea as sameList and cart yesterday?
 // Yes
 
@@ -193,15 +195,15 @@ const sumLoop = (list) => {
   for (let i = 0; i < list.length; i++) {
     const amount = list[i];
 
-  if (!isValidAmount(amount)) {
-    throw new Error (`invalid amount detected: ${amount}`)
+    if (!isValidAmount(amount)) {
+      throw new Error(`invalid amount detected: ${amount}`);
+    }
+
+    total += amount;
   }
 
-  total += amount;
-}
-
   return total;
-}
+};
 
 // b) sumReduce(list): the same result using reduce.
 //    Before you write it, answer in a comment:
@@ -233,18 +235,16 @@ try {
   console.log("Error:", error.message);
 }
 // Why does the initial value fix this? What does a day with no payments total?
-// Without an initial value, reduce() tries to use the first item in the array as its initial accumulator. 
+// Without an initial value, reduce() tries to use the first item in the array as its initial accumulator.
 // But an empty array has no first item. A day with no payments total as 0, the initial value
 
 // d) What should sumReduce([1000, "500"]) do? Before validation, + would concatenate
 // the number and string, producing "1000500" instead of the numeric total 1500.
 // The safe behavior is to throw, because a string amount is invalid.
 
-checkThrows(
-  "sumReduce rejects a string amount",
-  () => sumReduce([1000, "500"])
+checkThrows("sumReduce rejects a string amount", () =>
+  sumReduce([1000, "500"])
 );
-
 
 // ---------------------------------------------------------------
 // Exercise 4: Total the successful transactions (filter + reduce)
@@ -255,7 +255,7 @@ const transactions = [
   { id: "T3", amountKobo: 75050, status: "succeeded" },
   { id: "T4", amountKobo: 999, status: "pending" },
   { id: "T5", amountKobo: 2000000, status: "succeeded" },
-  { id: "T6", amountKobo: 3000000, status: "Succeeded" }
+  { id: "T6", amountKobo: 3000000, status: "Succeeded" },
 ];
 
 // Silent-result rule: reject missing/unknown statuses; sum every recognized succeeded transaction.
@@ -264,7 +264,9 @@ const transactions = [
 const totalSucceeded = (list) => {
   return sumReduce(
     list
-      .filter((transaction) => normalizeStatus(transaction?.status) === "succeeded")
+      .filter(
+        (transaction) => normalizeStatus(transaction?.status) === "succeeded"
+      )
       .map((transaction) => transaction.amountKobo)
   );
 };
@@ -306,9 +308,17 @@ checkList("count by status", countByStatus(transactions), {
   pending: 1,
 });
 checkList("count by status: empty", countByStatus([]), {});
-check("normalize mixed-case status with trailing space", normalizeStatus("SUCCEEDED "), "succeeded");
-checkThrows("reject an unknown status", () => countByStatus([{ status: "refunded" }]));
-checkThrows("reject a transaction with no status", () => countByStatus([{ id: "T-missing" }]));
+check(
+  "normalize mixed-case status with trailing space",
+  normalizeStatus("SUCCEEDED "),
+  "succeeded"
+);
+checkThrows("reject an unknown status", () =>
+  countByStatus([{ status: "refunded" }])
+);
+checkThrows("reject a transaction with no status", () =>
+  countByStatus([{ id: "T-missing" }])
+);
 // "Succeeded" is normalized to "succeeded"; an unknown status is rejected, not silently added.
 
 // ---------------------------------------------------------------
@@ -317,7 +327,7 @@ checkThrows("reject a transaction with no status", () => countByStatus([{ id: "T
 // Note: none of these crash. That is the point.
 
 // Bug A: should total 1750
-// prediction: Output will be undefined 
+// prediction: Output will be undefined
 const totalA = [500, 1000, 250].reduce((total, kobo) => {
   return total + kobo;
 }, 0);
@@ -349,8 +359,14 @@ checkThrows("CSV rejects decimal 12.50 after conversion", () =>
 // The blank field becomes 0, but sumReduce rejects 0 because individual amounts must be positive.
 check("Number empty string becomes zero", Number(""), 0);
 check("Number trims whitespace around 500", Number(" 500 "), 500);
-check("CSV accepts surrounding whitespace after conversion", sumReduce([" 500 "].map(Number)), 500);
-checkThrows("CSV rejects blank amount after conversion", () => sumReduce([""].map(Number)));
+check(
+  "CSV accepts surrounding whitespace after conversion",
+  sumReduce([" 500 "].map(Number)),
+  500
+);
+checkThrows("CSV rejects blank amount after conversion", () =>
+  sumReduce([""].map(Number))
+);
 // ---------------------------------------------------------------
 // Exercise 7: Build a daily summary
 // summarizeDay(list) returns ONE object. For the six transactions below, the expected shape is:
@@ -366,7 +382,8 @@ checkThrows("CSV rejects blank amount after conversion", () => sumReduce([""].ma
 // Silent-result rule: reject the whole summary if any transaction has a missing/unknown status or invalid succeeded amount.
 const summarizeDay = (list) => {
   const succeededKobo = totalSucceeded(list);
-  const succeededFormatted = succeededKobo === 0 ? "₦0.00" : formatNaira(succeededKobo);
+  const succeededFormatted =
+    succeededKobo === 0 ? "₦0.00" : formatNaira(succeededKobo);
 
   return {
     count: list.length,
@@ -395,11 +412,11 @@ checkList("summary: empty day", summarizeDay([]), {
 // reduce iterate over an array and returns an accumulated value. it does not change the original array
 // 2. Bug A, B and C all gave a wrong answer without an error. Pick one and describe
 //    how it could reach a real merchant's settlement report without anyone noticing.
-//// If a `reduce` callback forgets to `return` the accumulator (Bug A), the accumulator 
-// becomes `undefined` in the next run, resulting in `NaN` or an incomplete 
-// object. If this happens in a job that calculates daily settlements, the 
-// final report might show a total of 0 or missing data. Because it doesn't throw a 
-// crash, the system continues running, and the merchant receives an incorrect settlement 
+//// If a `reduce` callback forgets to `return` the accumulator (Bug A), the accumulator
+// becomes `undefined` in the next run, resulting in `NaN` or an incomplete
+// object. If this happens in a job that calculates daily settlements, the
+// final report might show a total of 0 or missing data. Because it doesn't throw a
+// crash, the system continues running, and the merchant receives an incorrect settlement
 // without any immediate error alerting the team.
 // 3. Cross-check the amount with a separately filtered list using the same documented status rule.
 // If totalSucceeded forgets to normalize "Succeeded", this test fails even if the main expected
@@ -407,7 +424,9 @@ checkList("summary: empty day", summarizeDay([]), {
 const summaryForCrossCheck = summarizeDay(transactions);
 const independentlySummedSucceeded = sumReduce(
   transactions
-    .filter((transaction) => normalizeStatus(transaction.status) === "succeeded")
+    .filter(
+      (transaction) => normalizeStatus(transaction.status) === "succeeded"
+    )
     .map((transaction) => transaction.amountKobo)
 );
 check(

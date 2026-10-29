@@ -14,25 +14,25 @@
 
 ## Week 2 at a glance
 
-| Day | Topic                                         | Build                                           |
-| --- | --------------------------------------------- | ----------------------------------------------- |
-| 1   | Functions: parameters, `return`, defaults     | Money helper functions, `parseGuess`            |
-| 2   | Arrow functions, scope, `const` vs `let`      | Rewrite Day 1 functions, predict scope puzzles  |
-| 3   | Arrays, `map` and `filter`                    | Work on a list of prices and transactions       |
-| 4   | `reduce`, objects, arrays of objects          | Totals and summaries                            |
-| 5   | Function library (average, max, word counter) | Small tested library in `library.js`            |
-| 6   | Inventory tracker, then the Week 2 quiz       | Inventory tracker, quiz (5 questions)           |
+| Day | Topic                                         | Build                                          |
+| --- | --------------------------------------------- | ---------------------------------------------- |
+| 1   | Functions: parameters, `return`, defaults     | Money helper functions, `parseGuess`           |
+| 2   | Arrow functions, scope, `const` vs `let`      | Rewrite Day 1 functions, predict scope puzzles |
+| 3   | Arrays, `map` and `filter`                    | Work on a list of prices and transactions      |
+| 4   | `reduce`, objects, arrays of objects          | Totals and summaries                           |
+| 5   | Function library (average, max, word counter) | Small tested library in `library.js`           |
+| 6   | Inventory tracker, then the Week 2 quiz       | Inventory tracker, quiz (5 questions)          |
 
 ---
 
 ## 1. Learn (60 min)
 
-| Minutes | Topic                                                      | Read for                                                                                   |
-| ------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| 25      | javascript.info: Functions                                 | parameters vs arguments, `return`, default values, a function that returns nothing         |
-| 15      | MDN: Functions (Guide, "Defining functions" and "Calling") | declaration syntax, what happens when you call a function with too few or too many args    |
-| 10      | javascript.info: Function expressions (skim only)          | just notice the syntax. Arrow functions come tomorrow                                      |
-| 10      | Re-read your own `exercises03.js` guessing-game validation | which lines check the input? Could they live in one function?                              |
+| Minutes | Topic                                                      | Read for                                                                                |
+| ------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 25      | javascript.info: Functions                                 | parameters vs arguments, `return`, default values, a function that returns nothing      |
+| 15      | MDN: Functions (Guide, "Defining functions" and "Calling") | declaration syntax, what happens when you call a function with too few or too many args |
+| 10      | javascript.info: Function expressions (skim only)          | just notice the syntax. Arrow functions come tomorrow                                   |
+| 10      | Re-read your own `exercises03.js` guessing-game validation | which lines check the input? Could they live in one function?                           |
 
 Write down 3 things you are still unsure about. Bring them to the Review block.
 
@@ -42,15 +42,15 @@ Write down 3 things you are still unsure about. Bring them to the Review block.
 
 Work in `exercises05.js`. Each exercise is described there in comments. The file has empty function stubs and a small `check` helper that prints PASS or FAIL, so you can test yourself without me.
 
-| #   | Exercise                                                     | Rough time |
-| --- | ------------------------------------------------------------ | ---------- |
-| 1   | Predict-then-run: missing `return`, missing arguments        | 10         |
-| 2   | `greet(name)`: your first function                           | 10         |
-| 3   | `isValidAmount(kobo)`                                        | 15         |
-| 4   | `calculateTax(kobo, ratePercent = 7.5)`                      | 20         |
-| 5   | `formatNaira(kobo)` (display only)                           | 15         |
+| #   | Exercise                                                      | Rough time |
+| --- | ------------------------------------------------------------- | ---------- |
+| 1   | Predict-then-run: missing `return`, missing arguments         | 10         |
+| 2   | `greet(name)`: your first function                            | 10         |
+| 3   | `isValidAmount(kobo)`                                         | 15         |
+| 4   | `calculateTax(kobo, ratePercent = 7.5)`                       | 20         |
+| 5   | `formatNaira(kobo)` (display only)                            | 15         |
 | 6   | `parseGuess(rawText)`: the guessing-game check, as a function | 15         |
-| 7   | Think: why `return` and not `console.log`?                   | 5          |
+| 7   | Think: why `return` and not `console.log`?                    | 5          |
 
 Rules for today:
 

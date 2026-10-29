@@ -35,9 +35,9 @@ function withReturn(a, b) {
   return a + b;
 }
 
-noReturn(2, 3);         // undefined: no return means undefined
-withReturn(2);          // NaN: b is undefined, and 2 + undefined is NaN
-withReturn("2", 3);     // "23": + with a string joins text, it doesn't add
+noReturn(2, 3); // undefined: no return means undefined
+withReturn(2); // NaN: b is undefined, and 2 + undefined is NaN
+withReturn("2", 3); // "23": + with a string joins text, it doesn't add
 ```
 
 **Payment angle:** `NaN` and `"23"` don't throw. They flow silently into totals, receipts and databases. That's why every money function below checks its input first.
@@ -51,9 +51,11 @@ const MAX_KOBO = 99900000000000; // ₦999,000,000,000: our business limit
 
 const isValidAmount = (kobo) => {
   if (typeof kobo !== "number") return false; // rejects "500", new Number(5)
-  return Number.isSafeInteger(kobo)           // rejects 3.5, NaN, Infinity, huge numbers
-    && kobo >= 1                              // rejects 0 and negatives
-    && kobo <= MAX_KOBO;                      // rejects amounts above our limit
+  return (
+    Number.isSafeInteger(kobo) && // rejects 3.5, NaN, Infinity, huge numbers
+    kobo >= 1 && // rejects 0 and negatives
+    kobo <= MAX_KOBO
+  ); // rejects amounts above our limit
 };
 ```
 
@@ -69,12 +71,15 @@ const isValidRate = (ratePercent) =>
 
 const isValidAmountOrZero = (kobo) => kobo === 0 || isValidAmount(kobo);
 
-const calculateTax = (kobo, ratePercent = 7.5) => {   // 7.5 is used if no rate is given
+const calculateTax = (kobo, ratePercent = 7.5) => {
+  // 7.5 is used if no rate is given
   if (!isValidRate(ratePercent)) throw new Error("Invalid tax rate");
   if (!isValidAmountOrZero(kobo)) {
-    throw new Error("Invalid kobo amount: must be a valid positive whole number or zero");
+    throw new Error(
+      "Invalid kobo amount: must be a valid positive whole number or zero"
+    );
   }
-  return Math.round(kobo * (ratePercent / 100));       // whole kobo only
+  return Math.round(kobo * (ratePercent / 100)); // whole kobo only
 };
 
 calculateTax(1999); // 149.925 rounds to 150
@@ -88,9 +93,10 @@ calculateTax(1999); // 149.925 rounds to 150
 
 ```js
 const formatNaira = (kobo) => {
-  if (!isValidAmount(kobo)) throw new Error("Invalid kobo amount for formatting");
+  if (!isValidAmount(kobo))
+    throw new Error("Invalid kobo amount for formatting");
   const naira = kobo / 100;
-  return "₦" + naira.toFixed(2);   // 1999 → "₦19.99"
+  return "₦" + naira.toFixed(2); // 1999 → "₦19.99"
 };
 ```
 
@@ -101,8 +107,8 @@ The result is a **string for screens and receipts**. Never do maths on it. Calcu
 ```js
 function parseGuess(rawText) {
   if (typeof rawText !== "string") return null;
-  const text = rawText.trim();             // " 42 " → "42" (friendlier for users)
-  if (!/^\d+$/.test(text)) return null;    // digits only: rejects "", "1e1", "0x1F", "+5", "3.5"
+  const text = rawText.trim(); // " 42 " → "42" (friendlier for users)
+  if (!/^\d+$/.test(text)) return null; // digits only: rejects "", "1e1", "0x1F", "+5", "3.5"
   const guess = Number(text);
   if (Number.isInteger(guess) && guess >= 1 && guess <= 100) return guess;
   return null;
@@ -120,17 +126,17 @@ Why check the text first: `Number("")` is `0`, `Number("1e1")` is `10`, and `Num
 ```js
 const rate = 7.5;
 function showRate() {
-  const rate = 10;   // a new variable that "shadows" the outer one inside this function
-  return rate;       // 10
+  const rate = 10; // a new variable that "shadows" the outer one inside this function
+  return rate; // 10
 }
-rate;                // still 7.5
+rate; // still 7.5
 
 if (true) {
-  let insideBlock = "hello";  // let/const: only exists inside { }
-  var leaky = "world";        // var: ignores the { } of an if, leaks out
+  let insideBlock = "hello"; // let/const: only exists inside { }
+  var leaky = "world"; // var: ignores the { } of an if, leaks out
 }
-typeof insideBlock;  // "undefined"
-typeof leaky;        // "string"
+typeof insideBlock; // "undefined"
+typeof leaky; // "string"
 ```
 
 Use `let` and `const`, not `var`. A variable that leaks out of its block can be changed by code that shouldn't be able to see it.
@@ -139,18 +145,22 @@ Use `let` and `const`, not `var`. A variable that leaks out of its block can be 
 
 ```js
 const prices = [100, 200];
-prices.push(300);   // allowed: the same array, its contents changed
-prices = [1];       // TypeError: you can't point a const at a different array
+prices.push(300); // allowed: the same array, its contents changed
+prices = [1]; // TypeError: you can't point a const at a different array
 ```
 
 ### Three ways to write a function, and hoisting
 
 ```js
-doubleA(10);                              // works: declarations are hoisted (ready before their line)
-function doubleA(n) { return n * 2; }
+doubleA(10); // works: declarations are hoisted (ready before their line)
+function doubleA(n) {
+  return n * 2;
+}
 
-const doubleB = function (n) { return n * 2; };  // expression
-const doubleC = (n) => n * 2;                    // arrow: one line, no return or { } needed
+const doubleB = function (n) {
+  return n * 2;
+}; // expression
+const doubleC = (n) => n * 2; // arrow: one line, no return or { } needed
 ```
 
 Calling `doubleB` or `doubleC` before their line gives:
@@ -163,7 +173,7 @@ The `const` exists but can't be used until its line runs. This is the same error
 
 ```js
 function makeCounter() {
-  let count = 0;              // private: nothing outside can reach it
+  let count = 0; // private: nothing outside can reach it
   return function () {
     count++;
     return count;
@@ -171,16 +181,17 @@ function makeCounter() {
 }
 const counterA = makeCounter();
 const counterB = makeCounter();
-counterA(); counterA();       // 1, 2
-counterB();                   // 1: each makeCounter() call creates its own count
+counterA();
+counterA(); // 1, 2
+counterB(); // 1: each makeCounter() call creates its own count
 ```
 
 ```js
 function makeTaxCalculator(ratePercent) {
   if (!Number.isFinite(ratePercent) || ratePercent < 0 || ratePercent > 100) {
-    throw new Error("Invalid tax rate");     // fail EARLY, when the calculator is created
+    throw new Error("Invalid tax rate"); // fail EARLY, when the calculator is created
   }
-  return (kobo) => calculateTax(kobo, ratePercent);  // ratePercent is remembered
+  return (kobo) => calculateTax(kobo, ratePercent); // ratePercent is remembered
 }
 const vat = makeTaxCalculator(7.5);
 vat(10000); // 750
@@ -194,7 +205,7 @@ The original code had one global `total` shared by every customer, so customer B
 
 ```js
 function makeTotal() {
-  let total = 0;                       // one private total per customer
+  let total = 0; // one private total per customer
   return function addToTotal(amountKobo) {
     total = total + amountKobo;
     return total;
@@ -203,7 +214,7 @@ function makeTotal() {
 const customerA = makeTotal();
 const customerB = makeTotal();
 customerA(1000); // 1000
-customerB(500);  // 500, not 1500
+customerB(500); // 500, not 1500
 ```
 
 **Payment angle:** shared money state is how one customer's balance leaks into another's. In Phase 3 the same idea appears again as race conditions.
@@ -217,14 +228,14 @@ customerB(500);  // 500, not 1500
 ```js
 let fee = 100;
 function makeFeeAdder() {
-  return (kobo) => kobo + fee;    // reads `fee` each time it runs
+  return (kobo) => kobo + fee; // reads `fee` each time it runs
 }
 const addFee = makeFeeAdder();
 fee = 200;
-addFee(1000);  // 1200, not 1100
+addFee(1000); // 1200, not 1100
 
 function makeFixedFeeAdder(fixedFee) {
-  return (kobo) => kobo + fixedFee;  // its own parameter, which no one else can change
+  return (kobo) => kobo + fixedFee; // its own parameter, which no one else can change
 }
 const addFixedFee = makeFixedFeeAdder(100);
 fee = 300;
@@ -237,25 +248,26 @@ For payments, trust the second one: the fee can't change after the calculator is
 
 ```js
 const cart = [];
-cart.push(500);          // returns 1 (the new LENGTH), not the array
-[1, 2] === [1, 2];       // false: two different arrays that look the same
-const sameList = cart;   // NOT a copy, just a second name for the same array
+cart.push(500); // returns 1 (the new LENGTH), not the array
+[1, 2] === [1, 2]; // false: two different arrays that look the same
+const sameList = cart; // NOT a copy, just a second name for the same array
 sameList.push(999);
-cart;                    // [500, 999]
-pricesKobo[4];           // undefined: no error when you read past the end
+cart; // [500, 999]
+pricesKobo[4]; // undefined: no error when you read past the end
 ```
 
 ### `map` transforms every item, `filter` keeps some
 
 ```js
-const withVatMap = (prices) => prices.map((price) => price + calculateTax(price));
+const withVatMap = (prices) =>
+  prices.map((price) => price + calculateTax(price));
 
 const getSucceeded = (list) => list.filter((t) => t.status === "succeeded");
 
 // Chain: filter first (objects still have .status), then map
 const succeededIds = transactions
   .filter((t) => t.status === "succeeded")
-  .map((t) => t.id);           // ["T1", "T3", "T5"]
+  .map((t) => t.id); // ["T1", "T3", "T5"]
 ```
 
 - Both return a **new array** and leave the original alone.
@@ -275,11 +287,16 @@ function applyDiscount(prices) {
 ### Don't lose bad records: split them and count
 
 ```js
-const getValidAmounts = (list) => list.filter((amount) => isValidAmount(amount));
-const getInvalidAmounts = (list) => list.filter((amount) => !isValidAmount(amount));
+const getValidAmounts = (list) =>
+  list.filter((amount) => isValidAmount(amount));
+const getInvalidAmounts = (list) =>
+  list.filter((amount) => !isValidAmount(amount));
 
-check("all records accounted for",
-  valid.length + invalid.length, rawAmounts.length);
+check(
+  "all records accounted for",
+  valid.length + invalid.length,
+  rawAmounts.length
+);
 ```
 
 The count check catches records that vanish or get counted twice because of a bug in either filter. Every record is either valid or invalid, so the two counts must add up to the total.
@@ -297,11 +314,14 @@ const sumReduce = (list) => {
       throw new Error(`Invalid amount detected: ${amount}`);
     }
     const newTotal = total + amount;
-    if (!Number.isSafeInteger(newTotal)) {          // added on Day 5
-      throw new Error(`Running total exceeded safe integer limits: ${newTotal}`);
+    if (!Number.isSafeInteger(newTotal)) {
+      // added on Day 5
+      throw new Error(
+        `Running total exceeded safe integer limits: ${newTotal}`
+      );
     }
-    return newTotal;   // FORGET this and the next round gets undefined, giving NaN
-  }, 0);               // the initial value
+    return newTotal; // FORGET this and the next round gets undefined, giving NaN
+  }, 0); // the initial value
 };
 ```
 
@@ -310,9 +330,9 @@ const sumReduce = (list) => {
 ### Objects: dot vs brackets
 
 ```js
-payment.amountKobo;     // reads the key literally called "amountKobo"
-payment[field];         // reads the key whose NAME is stored in the variable field
-payment.missing;        // undefined: no error, which is another silent value
+payment.amountKobo; // reads the key literally called "amountKobo"
+payment[field]; // reads the key whose NAME is stored in the variable field
+payment.missing; // undefined: no error, which is another silent value
 ```
 
 ### One status rule, used everywhere
@@ -321,9 +341,11 @@ payment.missing;        // undefined: no error, which is another silent value
 const KNOWN_STATUSES = new Set(["succeeded", "failed", "pending"]);
 
 const normalizeStatus = (status) => {
-  if (typeof status !== "string") throw new Error(`Invalid transaction status: ${status}`);
-  const normalized = status.trim().toLowerCase();       // " SUCCEEDED " → "succeeded"
-  if (!KNOWN_STATUSES.has(normalized)) {                // unknown? reject, don't guess
+  if (typeof status !== "string")
+    throw new Error(`Invalid transaction status: ${status}`);
+  const normalized = status.trim().toLowerCase(); // " SUCCEEDED " → "succeeded"
+  if (!KNOWN_STATUSES.has(normalized)) {
+    // unknown? reject, don't guess
     throw new Error(`Unknown transaction status: ${status}`);
   }
   return normalized;
@@ -339,11 +361,11 @@ const normalizeStatus = (status) => {
 ```js
 const countByStatus = (list) => {
   return list.reduce((acc, t) => {
-    const status = normalizeStatus(t?.status);   // t?.status: undefined if t is missing, no crash
+    const status = normalizeStatus(t?.status); // t?.status: undefined if t is missing, no crash
     if (acc[status] === undefined) acc[status] = 0;
     acc[status] = acc[status] + 1;
     return acc;
-  }, {});                                         // start from an empty object
+  }, {}); // start from an empty object
 };
 // → { succeeded: 4, failed: 1, pending: 1 }
 ```
@@ -365,7 +387,9 @@ const totalSucceeded = (list) =>
 function applyDiscountStrict(prices) {
   return prices.map((price) => {
     if (price < 100 || !isValidAmount(price)) {
-      throw new Error(`Invalid price: ${price}. Prices below 100 do not qualify for a discount.`);
+      throw new Error(
+        `Invalid price: ${price}. Prices below 100 do not qualify for a discount.`
+      );
     }
     return price - 100;
   });
@@ -397,10 +421,10 @@ Write it **before** the code. The tests then check the contract. If the code and
 ### Built-in traps
 
 ```js
-Math.max();                       // -Infinity: an empty "largest payment" report shows -Infinity
-Math.max(3, "10");                // 10: the string gets converted silently
-Number.MAX_SAFE_INTEGER;          // 9007199254740991
-9007199254740991 + 2;             // 9007199254740992: WRONG, and no error
+Math.max(); // -Infinity: an empty "largest payment" report shows -Infinity
+Math.max(3, "10"); // 10: the string gets converted silently
+Number.MAX_SAFE_INTEGER; // 9007199254740991
+9007199254740991 + 2; // 9007199254740992: WRONG, and no error
 ```
 
 Above the safe limit, JavaScript rounds silently. For money, a silent wrong number is worse than a crash.
@@ -409,31 +433,39 @@ Above the safe limit, JavaScript rounds silently. For money, a silent wrong numb
 
 ```js
 const average = (list) => {
-  if (list.length === 0) throw new Error("Cannot calculate average of an empty list"); // 0/0 is NaN
-  return Math.round(sumReduce(list) / list.length);   // reuse sumReduce, round to whole kobo
+  if (list.length === 0)
+    throw new Error("Cannot calculate average of an empty list"); // 0/0 is NaN
+  return Math.round(sumReduce(list) / list.length); // reuse sumReduce, round to whole kobo
 };
 
 const max = (list) => {
-  if (list.length === 0) throw new Error("Cannot calculate max of an empty list");
+  if (list.length === 0)
+    throw new Error("Cannot calculate max of an empty list");
   if (!isValidAmount(list[0])) throw new Error("Invalid amount in list"); // first item is the start value
   return list.reduce((max, current) => {
-    if (!isValidAmount(current)) throw new Error("Cannot calculate max on an invalid list");
+    if (!isValidAmount(current))
+      throw new Error("Cannot calculate max on an invalid list");
     return current > max ? current : max;
-  });                                                  // no initial value, so check list[0] separately
+  }); // no initial value, so check list[0] separately
 };
 
 const largestTransaction = (list) => {
-  const successful = list.filter((t) => normalizeStatus(t.status) === "succeeded"); // received money only
+  const successful = list.filter(
+    (t) => normalizeStatus(t.status) === "succeeded"
+  ); // received money only
   if (successful.length === 0) throw new Error("No successful transactions");
   const maxAmount = max(successful.map((t) => t.amountKobo));
-  return successful.find((t) => t.amountKobo === maxAmount);  // find returns the FIRST match: tie → first
+  return successful.find((t) => t.amountKobo === maxAmount); // find returns the FIRST match: tie → first
 };
 
 const wordCount = (text) => {
   if (typeof text !== "string") throw new Error("Input must be a string");
-  const words = text.toLowerCase().split(" ").filter((word) => word !== ""); // drop empty pieces from extra spaces
+  const words = text
+    .toLowerCase()
+    .split(" ")
+    .filter((word) => word !== ""); // drop empty pieces from extra spaces
   return words.reduce((counts, word) => {
-    counts[word] = (counts[word] || 0) + 1;   // first time: undefined || 0 → 0, then +1
+    counts[word] = (counts[word] || 0) + 1; // first time: undefined || 0 → 0, then +1
     return counts;
   }, {});
 };
@@ -444,9 +476,9 @@ const wordCount = (text) => {
 ### Objects as lists
 
 ```js
-Object.keys({ succeeded: 4, failed: 1 });     // ["succeeded", "failed"]
-Object.values({ succeeded: 4, failed: 1 });   // [4, 1]
-Object.entries({ succeeded: 4, failed: 1 });  // [["succeeded", 4], ["failed", 1]]
+Object.keys({ succeeded: 4, failed: 1 }); // ["succeeded", "failed"]
+Object.values({ succeeded: 4, failed: 1 }); // [4, 1]
+Object.entries({ succeeded: 4, failed: 1 }); // [["succeeded", 4], ["failed", 1]]
 ```
 
 They turn an object into an array, so `map`, `filter` and `reduce` work on it.
@@ -470,11 +502,11 @@ Swap "stock" for "balance" and "product" for "account": every bug here is a paym
 
 ```js
 const inv1 = makeInventory();
-const oil = inv1[1];          // points at the same object, no copy
-oil.stock = oil.stock - 1;    // CHANGES the object, so inv1[1].stock is now 2 too
+const oil = inv1[1]; // points at the same object, no copy
+oil.stock = oil.stock - 1; // CHANGES the object, so inv1[1].stock is now 2 too
 
 let rice = inv1[0];
-rice = { sku: "RICE-5KG", stock: 99 };  // only moves the VARIABLE; inv1[0] is untouched
+rice = { sku: "RICE-5KG", stock: 99 }; // only moves the VARIABLE; inv1[0] is untouched
 ```
 
 **How to tell by looking:** `something.key = ...` or `.push(...)` changes the object. `name = ...` only moves the name.
@@ -489,9 +521,9 @@ const findProduct = (inventory, sku) => {
   if (typeof sku !== "string" || sku.trim() === "") {
     throw new Error("SKU must be a non-empty string");
   }
-  const product = inventory.find((p) => p.sku === sku);  // case-sensitive on purpose
+  const product = inventory.find((p) => p.sku === sku); // case-sensitive on purpose
   if (!product) throw new Error(`Product not found: ${sku}`);
-  return product;     // the real object, not a copy, so callers can change it
+  return product; // the real object, not a copy, so callers can change it
 };
 ```
 
@@ -502,24 +534,29 @@ const findProduct = (inventory, sku) => {
 ```js
 const removeStock = (inventory, sku, qty) => {
   const product = findProduct(inventory, sku);
-  if (!Number.isSafeInteger(qty) || qty <= 0) {          // rejects 0, -3, 1.5, "5"
+  if (!Number.isSafeInteger(qty) || qty <= 0) {
+    // rejects 0, -3, 1.5, "5"
     throw new Error("Quantity must be a positive whole number");
   }
-  if (qty > product.stock) throw new Error("Insufficient stock");  // CHECK...
-  product.stock -= qty;                                            // ...THEN change
+  if (qty > product.stock) throw new Error("Insufficient stock"); // CHECK...
+  product.stock -= qty; // ...THEN change
   return product.stock;
 };
 ```
 
 Compare this with the quiz Q5 `withdraw`, which changes first and checks after. When that throws, the money is already gone and the account is negative. **A function that throws after changing state is worse than one that never throws.**
 
-Why reject negatives: `removeStock(inv, "OIL-1L", -3)` would *add* 3. In payments, "withdraw −₦3,000" deposits money.
+Why reject negatives: `removeStock(inv, "OIL-1L", -3)` would _add_ 3. In payments, "withdraw −₦3,000" deposits money.
 
 **Test the state after a failure, not only that it threw:**
 
 ```js
 checkThrows("remove too many milk", () => removeStock(inv3, "MILK-400G", 8));
-check("milk unchanged after failed remove", findProduct(inv3, "MILK-400G").stock, 7);
+check(
+  "milk unchanged after failed remove",
+  findProduct(inv3, "MILK-400G").stock,
+  7
+);
 ```
 
 ### When a library rule doesn't fit: `stockValue`
@@ -530,16 +567,19 @@ Sugar has `stock: 0`, so its value is `0`. `sumReduce` rejects `0` because it us
 const stockValue = (inventory) => {
   if (!Array.isArray(inventory)) throw new Error("Inventory must be an array");
   const productValues = inventory.map((product) => {
-    const { priceKobo, stock } = product;              // destructuring, see section 8
+    const { priceKobo, stock } = product; // destructuring, see section 8
     if (!isValidAmount(priceKobo)) throw new Error("Invalid price of product");
-    if (!Number.isSafeInteger(stock) || stock < 0) throw new Error("Invalid stock quantity"); // 0 allowed
+    if (!Number.isSafeInteger(stock) || stock < 0)
+      throw new Error("Invalid stock quantity"); // 0 allowed
     const value = priceKobo * stock;
-    if (!Number.isSafeInteger(value)) throw new Error("Product value exceeds safe integer limits");
+    if (!Number.isSafeInteger(value))
+      throw new Error("Product value exceeds safe integer limits");
     return value;
   });
   return productValues.reduce((total, value) => {
     const newTotal = total + value;
-    if (!Number.isSafeInteger(newTotal)) throw new Error("Inventory total exceeds safe integer limits");
+    if (!Number.isSafeInteger(newTotal))
+      throw new Error("Inventory total exceeds safe integer limits");
     return newTotal;
   }, 0);
 };
@@ -558,7 +598,7 @@ const applyMovements = (inventory, movements) => {
   if (!Array.isArray(inventory)) throw new Error("Inventory must be an array");
   if (!Array.isArray(movements)) throw new Error("Movements must be an array");
 
-  const changes = new Map();   // sku → stock as it WOULD be (see section 8)
+  const changes = new Map(); // sku → stock as it WOULD be (see section 8)
 
   // Pass 1: check and simulate. Nothing real is changed here.
   for (const movement of movements) {
@@ -572,14 +612,17 @@ const applyMovements = (inventory, movements) => {
 
     // Second movement for the same sku? Start from the SIMULATED value, not the real stock.
     const currentSimulated = changes.has(movement.sku)
-      ? changes.get(movement.sku) : product.stock;
+      ? changes.get(movement.sku)
+      : product.stock;
 
     let newSimulated;
     if (movement.type === "in") newSimulated = currentSimulated + movement.qty;
     else newSimulated = currentSimulated - movement.qty;
 
-    if (newSimulated < 0) throw new Error(`Insufficient stock for ${movement.sku}`);
-    if (!Number.isSafeInteger(newSimulated)) throw new Error("Stock exceeds safe integer limits");
+    if (newSimulated < 0)
+      throw new Error(`Insufficient stock for ${movement.sku}`);
+    if (!Number.isSafeInteger(newSimulated))
+      throw new Error("Stock exceeds safe integer limits");
 
     changes.set(movement.sku, newSimulated);
   }
@@ -592,7 +635,7 @@ const applyMovements = (inventory, movements) => {
 };
 ```
 
-**The hard case:** OIL has 3, and a batch removes 2, then 2 again. Check each removal against the *real* stock and both pass (2 ≤ 3, then 2 ≤ 3 again), so you'd sell 4 from 3. Check against the *simulated* stock and the second removal sees only 1 left, so it's rejected. The Map is what carries "1 left" forward to the next movement.
+**The hard case:** OIL has 3, and a batch removes 2, then 2 again. Check each removal against the _real_ stock and both pass (2 ≤ 3, then 2 ≤ 3 again), so you'd sell 4 from 3. Check against the _simulated_ stock and the second removal sees only 1 left, so it's rejected. The Map is what carries "1 left" forward to the next movement.
 
 ### Reconciliation: an independent check
 
@@ -600,7 +643,7 @@ const applyMovements = (inventory, movements) => {
 const countStock = (inv) => inv.reduce((sum, p) => sum + p.stock, 0);
 
 const invCheck = makeInventory();
-const totalBefore = countStock(invCheck);           // 22 (a number, saved now)
+const totalBefore = countStock(invCheck); // 22 (a number, saved now)
 
 const totalIn = movements
   .filter((movement) => movement.type === "in")
@@ -610,7 +653,7 @@ const totalOut = movements
   .reduce((sum, movement) => sum + movement.qty, 0); // 5
 
 applyMovements(invCheck, movements);
-const totalAfter = countStock(invCheck);             // 27
+const totalAfter = countStock(invCheck); // 27
 
 check("total stock math", totalBefore + totalIn - totalOut, totalAfter);
 ```
@@ -638,8 +681,8 @@ throw new Error("Insufficient stock");
 **Write messages that say what went wrong and with what value:**
 
 ```js
-throw new Error(`Invalid amount detected: ${amount}`);   // good: shows the bad value
-throw new Error("Error");                                // useless when you're debugging later
+throw new Error(`Invalid amount detected: ${amount}`); // good: shows the bad value
+throw new Error("Error"); // useless when you're debugging later
 ```
 
 ### `try/catch`: handle it here
@@ -651,7 +694,7 @@ try {
     else if (m.type === "out") removeStock(inv, m.sku, m.qty);
   }
 } catch (error) {
-  console.log("Batch failed:", error.message);   // runs only if something in try threw
+  console.log("Batch failed:", error.message); // runs only if something in try threw
 }
 // the program carries on from here
 ```
@@ -663,14 +706,15 @@ try {
 ### How `checkThrows` works
 
 ```js
-function checkThrows(testName, fn) {   // fn is a FUNCTION to run later, not a result
+function checkThrows(testName, fn) {
+  // fn is a FUNCTION to run later, not a result
   try {
-    fn();                                  // run the code we expect to fail
+    fn(); // run the code we expect to fail
     console.log(`FAIL - ${testName} (expected to throw, but it did not)`);
-    return false;                          // reached only if fn() did NOT throw
+    return false; // reached only if fn() did NOT throw
   } catch (error) {
     console.log(`PASS - ${testName} (threw: "${error.message}")`);
-    return true;                           // ANY error lands here
+    return true; // ANY error lands here
   }
 }
 
@@ -681,10 +725,10 @@ checkThrows("unknown sku", () => findProduct(inv2, "BEANS-1KG"));
 
 **Its weakness: any error counts as a pass.** Two of your tests passed for the wrong reason:
 
-| Test | What it printed | Real cause |
-|---|---|---|
-| Arguments swapped: `checkThrows(fn, "name")` | `fn is not a function` | The test never ran your code |
-| `bigList` test placed above `const bigList` | `Cannot access 'bigList' before initialization` | The list didn't exist yet |
+| Test                                         | What it printed                                 | Real cause                   |
+| -------------------------------------------- | ----------------------------------------------- | ---------------------------- |
+| Arguments swapped: `checkThrows(fn, "name")` | `fn is not a function`                          | The test never ran your code |
+| `bigList` test placed above `const bigList`  | `Cannot access 'bigList' before initialization` | The list didn't exist yet    |
 
 **Rule:** after every `checkThrows`, read the message. It must be **your** error message. A `TypeError` or `ReferenceError` you didn't write means the test is broken.
 
@@ -715,24 +759,24 @@ Full lesson: Week 3.
 ### `Map`: a lookup table
 
 ```js
-const changes = new Map();          // empty table
+const changes = new Map(); // empty table
 
-changes.set("OIL-1L", 1);           // store 1 under the key "OIL-1L"
-changes.get("OIL-1L");              // 1
-changes.get("RICE-5KG");            // undefined: nothing stored under that key
-changes.has("OIL-1L");              // true
-changes.has("RICE-5KG");            // false
-changes.set("OIL-1L", 0);           // same key again: REPLACES the value
-changes.entries();                  // all pairs: ["OIL-1L", 0], ...
+changes.set("OIL-1L", 1); // store 1 under the key "OIL-1L"
+changes.get("OIL-1L"); // 1
+changes.get("RICE-5KG"); // undefined: nothing stored under that key
+changes.has("OIL-1L"); // true
+changes.has("RICE-5KG"); // false
+changes.set("OIL-1L", 0); // same key again: REPLACES the value
+changes.entries(); // all pairs: ["OIL-1L", 0], ...
 ```
 
 **Trace of `applyMovements` on `badMovements`, so you can see the Map at each step:**
 
-| Movement | `has`? | Start from | New value | Map after |
-|---|---|---|---|---|
-| RICE in 10 | no | real stock 12 | 22 | RICE→22 |
-| OIL out 2 | no | real stock 3 | 1 | RICE→22, OIL→1 |
-| OIL out 5 | **yes** | **simulated 1** | −4 | throws "Insufficient stock for OIL-1L" |
+| Movement   | `has`?  | Start from      | New value | Map after                              |
+| ---------- | ------- | --------------- | --------- | -------------------------------------- |
+| RICE in 10 | no      | real stock 12   | 22        | RICE→22                                |
+| OIL out 2  | no      | real stock 3    | 1         | RICE→22, OIL→1                         |
+| OIL out 5  | **yes** | **simulated 1** | −4        | throws "Insufficient stock for OIL-1L" |
 
 Nothing reached pass 2, so the real inventory is unchanged.
 

@@ -15,25 +15,25 @@
 
 ## Week 2 at a glance
 
-| Day | Topic                                         | Build                                           |
-| --- | --------------------------------------------- | ----------------------------------------------- |
-| 1   | Functions: parameters, `return`, defaults     | Money helper functions, `parseGuess` (done)     |
-| 2   | Arrow functions, scope, `const` vs `let`      | Rewrite Day 1 functions, predict scope puzzles  |
-| 3   | Arrays, `map` and `filter`                    | Work on a list of prices and transactions       |
-| 4   | `reduce`, objects, arrays of objects          | Totals and summaries                            |
-| 5   | Function library (average, max, word counter) | Small tested library in `library.js`            |
-| 6   | Inventory tracker, then the Week 2 quiz       | Inventory tracker, quiz (5 questions)           |
+| Day | Topic                                         | Build                                          |
+| --- | --------------------------------------------- | ---------------------------------------------- |
+| 1   | Functions: parameters, `return`, defaults     | Money helper functions, `parseGuess` (done)    |
+| 2   | Arrow functions, scope, `const` vs `let`      | Rewrite Day 1 functions, predict scope puzzles |
+| 3   | Arrays, `map` and `filter`                    | Work on a list of prices and transactions      |
+| 4   | `reduce`, objects, arrays of objects          | Totals and summaries                           |
+| 5   | Function library (average, max, word counter) | Small tested library in `library.js`           |
+| 6   | Inventory tracker, then the Week 2 quiz       | Inventory tracker, quiz (5 questions)          |
 
 ---
 
 ## 1. Learn (60 min)
 
-| Minutes | Topic                                                  | Read for                                                                                   |
-| ------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| 20      | javascript.info: Arrow functions, the basics           | `=>` syntax, one-line form with implicit return, multi-line form that needs `return`       |
-| 20      | javascript.info: Variable scope, closure               | outer variables, block scope, what a function remembers from where it was created          |
-| 10      | MDN: `let`, `const` and "Scope" (Glossary)             | block scope, the temporal dead zone, why `const` still lets an object's contents change    |
-| 10      | Re-read your `exercises05.js`                          | which functions would be a clean one-liner as an arrow? Which would not?                   |
+| Minutes | Topic                                        | Read for                                                                                |
+| ------- | -------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 20      | javascript.info: Arrow functions, the basics | `=>` syntax, one-line form with implicit return, multi-line form that needs `return`    |
+| 20      | javascript.info: Variable scope, closure     | outer variables, block scope, what a function remembers from where it was created       |
+| 10      | MDN: `let`, `const` and "Scope" (Glossary)   | block scope, the temporal dead zone, why `const` still lets an object's contents change |
+| 10      | Re-read your `exercises05.js`                | which functions would be a clean one-liner as an arrow? Which would not?                |
 
 Write down 3 things you are still unsure about. Bring them to the Review block.
 
@@ -43,15 +43,15 @@ Write down 3 things you are still unsure about. Bring them to the Review block.
 
 Work in `exercises06.js`. Each exercise is described there in comments. It has the same `check` helper as yesterday.
 
-| #   | Exercise                                                        | Rough time |
-| --- | --------------------------------------------------------------- | ---------- |
-| 1   | Predict-then-run: scope puzzles (block, function, shadowing)    | 15         |
-| 2   | Same function, three syntaxes                                   | 10         |
-| 3   | Rewrite `calculateTax` and `formatNaira` as arrows              | 20         |
-| 4   | Small arrow helpers (`toKobo`, `toNaira`, `isEven`)             | 10         |
-| 5   | A closure: `makeCounter` and `makeTaxCalculator(rate)`          | 20         |
-| 6   | Find and fix the shared-state bug                               | 10         |
-| 7   | Think: why is a shared global dangerous in payment code?        | 5          |
+| #   | Exercise                                                     | Rough time |
+| --- | ------------------------------------------------------------ | ---------- |
+| 1   | Predict-then-run: scope puzzles (block, function, shadowing) | 15         |
+| 2   | Same function, three syntaxes                                | 10         |
+| 3   | Rewrite `calculateTax` and `formatNaira` as arrows           | 20         |
+| 4   | Small arrow helpers (`toKobo`, `toNaira`, `isEven`)          | 10         |
+| 5   | A closure: `makeCounter` and `makeTaxCalculator(rate)`       | 20         |
+| 6   | Find and fix the shared-state bug                            | 10         |
+| 7   | Think: why is a shared global dangerous in payment code?     | 5          |
 
 Rules for today:
 

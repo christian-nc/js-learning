@@ -270,7 +270,7 @@ console.log(wrongFormatted);
 // Run each part, read the output, explain the bug in a comment, then fix it.
 
 // Bug A: should double every price
-// The bug here is that the original code didnt have a return for p * 2 and will return undefined for each element in the array 
+// The bug here is that the original code didnt have a return for p * 2 and will return undefined for each element in the array
 const doubled = pricesKobo.map((p) => {
   return p * 2;
 });

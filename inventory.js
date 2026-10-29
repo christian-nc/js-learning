@@ -59,7 +59,8 @@ const sumReduce = (list) => {
 
     const newTotal = total + amount;
 
-    if (!Number.isSafeInteger(newTotal)) {  // Check if the new running total is still a safe integer
+    if (!Number.isSafeInteger(newTotal)) {
+      // Check if the new running total is still a safe integer
       throw new Error(
         `Running total exceeded safe integer limits: ${newTotal}`
       );
@@ -108,8 +109,8 @@ console.log(fresh[1] === inv1[1]);
 let rice = inv1[0];
 rice = { sku: "RICE-5KG", name: "Rice 5kg", priceKobo: 850000, stock: 99 };
 
-// prediction (careful: is this a change to the object, or to the variable?): 0 
-// makes the variable rice point at a new object. 
+// prediction (careful: is this a change to the object, or to the variable?): 0
+// makes the variable rice point at a new object.
 // The original rice object in inv1 is untouched, so it still shows 0.
 console.log(inv1[0].stock);
 
@@ -132,7 +133,7 @@ console.log(makeInventory().find((p) => p.sku === "BEANS-1KG"));
 // for product?.stock - 1? :  product?.stock checks whether product is null or undefined.
 // Because it is undefined, the expression returns undefined
 // JavaScript then evaluates undefined - 1, which produces NaN.
-// The silent failure is the second one: product?.stock - 1, 
+// The silent failure is the second one: product?.stock - 1,
 // when it produces NaN and the program doesn't detect it
 
 // Contract (input, output, empty input, bad input):
@@ -142,7 +143,7 @@ console.log(makeInventory().find((p) => p.sku === "BEANS-1KG"));
 // Empty inventory - Throw an error
 // Wrong letter case	- No match; throw an error
 // I want case sensistive matching because in payment, different case letters might mean different things
-// It is a good practice to stick to everytime 
+// It is a good practice to stick to everytime
 
 // write findProduct here
 const findProduct = (inventory, sku) => {
@@ -199,9 +200,9 @@ const addStock = (inventory, sku, qty) => {
   }
 
   const newStock = product.stock + qty;
-  
+
   if (!Number.isSafeInteger(newStock)) {
-    throw new Error("Stock exceeds safe integer limits")
+    throw new Error("Stock exceeds safe integer limits");
   }
 
   product.stock = newStock;
@@ -224,8 +225,8 @@ const removeStock = (inventory, sku, qty) => {
     throw new Error("Quantity must be a positive integer");
   }
 
-  if (qty >product.stock) {
-    throw new Error("Insufficient stock")
+  if (qty > product.stock) {
+    throw new Error("Insufficient stock");
   }
 
   product.stock -= qty;
@@ -239,14 +240,24 @@ check("remove last oil", removeStock(inv3, "OIL-1L", 1), 0);
 checkThrows("remove from empty", () => removeStock(inv3, "OIL-1L", 1));
 check("oil still 0 after failed remove", findProduct(inv3, "OIL-1L").stock, 0);
 checkThrows("remove too many milk", () => removeStock(inv3, "MILK-400G", 8));
-check("milk unchanged after failed remove", findProduct(inv3, "MILK-400G").stock, 7);
+check(
+  "milk unchanged after failed remove",
+  findProduct(inv3, "MILK-400G").stock,
+  7
+);
 checkThrows("quantity 0", () => addStock(inv3, "RICE-5KG", 0));
 checkThrows("negative quantity", () => addStock(inv3, "RICE-5KG", -3));
 checkThrows("decimal quantity", () => removeStock(inv3, "MILK-400G", 1.5));
 checkThrows("quantity as string", () => addStock(inv3, "RICE-5KG", "5"));
 check("rice unchanged after bad adds", findProduct(inv3, "RICE-5KG").stock, 17);
-checkThrows("addStock with 0 qty throws error", () => addStock(inv3, "RICE-5KG", 0));
-check("addStock with 0 qty does not mutate stock", findProduct(inv3, "RICE-5KG").stock, 17);
+checkThrows("addStock with 0 qty throws error", () =>
+  addStock(inv3, "RICE-5KG", 0)
+);
+check(
+  "addStock with 0 qty does not mutate stock",
+  findProduct(inv3, "RICE-5KG").stock,
+  17
+);
 // Question (comment): why is removeStock(inv, "OIL-1L", -3) dangerous if you
 // forget to reject negatives? (Think: "withdraw -3000 kobo".)
 // It will turn a subtraction into an addition which is dangerous
@@ -262,8 +273,8 @@ check("addStock with 0 qty does not mutate stock", findProduct(inv3, "RICE-5KG")
 // this a different situation? Write your decision in the contract, then make it work.
 // Don't loosen isValidAmount for everyone without saying why.
 // stockValue(makeInventory()) should return 13090000 kobo. The first implementation throws because the zero value for Sugar violates sumReduce's payment-amount validation rule
-// The rule is isValidAmount, which requires an amount to be at least 1 kobo. Sugar is the product causing the clash because its stock is 0, 
-// making its total inventory value 0. not a wrong for payment amounts, inventory valuation is a different situation. I will keep the payment validation rule unchanged 
+// The rule is isValidAmount, which requires an amount to be at least 1 kobo. Sugar is the product causing the clash because its stock is 0,
+// making its total inventory value 0. not a wrong for payment amounts, inventory valuation is a different situation. I will keep the payment validation rule unchanged
 // and validate inventory values separately which will allow zero while still rejecting unsafe integers.
 // Contract:
 // input: Each product object must contain: priceKobo: A safe integer where 1 <= priceKobo <= MAX_KOBO and stock: A safe integer where stock >= 0.
@@ -348,14 +359,11 @@ const lowStock = (inventory, threshold) => {
     throw new Error("Threshold must be a non-negative integer");
   }
   if (!Array.isArray(inventory)) {
-  throw new Error("Inventory must be an array");
-}
+    throw new Error("Inventory must be an array");
+  }
 
   for (const product of inventory) {
-    if (
-      !Number.isSafeInteger(product.stock) ||
-      product.stock < 0
-    ) {
+    if (!Number.isSafeInteger(product.stock) || product.stock < 0) {
       throw new Error("Invalid product stock");
     }
 
@@ -369,7 +377,9 @@ const lowStock = (inventory, threshold) => {
     .map((product) => product.sku);
 };
 checkList("below 5", lowStock(makeInventory(), 5), ["OIL-1L", "SUGAR-1KG"]);
-checkList("below 1 (out of stock)", lowStock(makeInventory(), 1), ["SUGAR-1KG"]);
+checkList("below 1 (out of stock)", lowStock(makeInventory(), 1), [
+  "SUGAR-1KG",
+]);
 checkList("nothing below 0", lowStock(makeInventory(), 0), []);
 checkThrows("threshold as string", () => lowStock(makeInventory(), "5"));
 
@@ -393,9 +403,9 @@ const badMovements = [
 // a) First, the obvious version: a loop that calls addStock/removeStock for
 //    each movement. Run it on badMovements with a fresh inventory, catch the
 //    error, then print rice's stock.
-// prediction (rice stock after the failed batch): 
+// prediction (rice stock after the failed batch):
 // Prediction: rice stock will be 22 after the failed batch.
-// Why my original prediction was wrong: I assumed the failed batch would undo previous changes, but the loop updates stock immediately. 
+// Why my original prediction was wrong: I assumed the failed batch would undo previous changes, but the loop updates stock immediately.
 // Rice increased from 12 to 22 before the oil movement threw an error.
 const inv = makeInventory();
 
@@ -420,7 +430,7 @@ console.log(
 
 // Question (comment): the batch "failed", but did it change anything? If this
 // were a bank batch of 4 transfers, what would the customer see?
-// Yes it still changed the inventory. 
+// Yes it still changed the inventory.
 // customer will see batch failed but 2 transfers already went through. If they press retry, those 2 run again and get paid twice.
 
 // b) Now make applyMovements ALL-OR-NOTHING for the whole batch: if any movement
@@ -442,7 +452,7 @@ const applyMovements = (inventory, movements) => {
   if (!Array.isArray(inventory)) throw new Error("Inventory must be an array");
   if (!Array.isArray(movements)) throw new Error("Movements must be an array");
 
-    // Map stores each SKU's simulated final stock, keyed by SKU.
+  // Map stores each SKU's simulated final stock, keyed by SKU.
   const changes = new Map();
 
   // Pass 1: Check and simulate
@@ -453,32 +463,32 @@ const applyMovements = (inventory, movements) => {
     if (!Number.isSafeInteger(movement.qty) || movement.qty <= 0) {
       throw new Error("Quantity must be a positive integer");
     }
-    
+
     // findProduct throws if SKU is invalid or not found
-    const product = findProduct(inventory, movement.sku); 
-    
-    
+    const product = findProduct(inventory, movement.sku);
+
     // Get the simulated stock. If we've already simulated a change for this SKU, use that.
     // If this SKU was already simulated, reuse that updated value;
     // otherwise, start with its real stock.
-    const currentSimulated = changes.has(movement.sku) 
-      ? changes.get(movement.sku) : product.stock;
-    
+    const currentSimulated = changes.has(movement.sku)
+      ? changes.get(movement.sku)
+      : product.stock;
+
     let newSimulated;
-    
+
     if (movement.type === "in") {
       newSimulated = currentSimulated + movement.qty;
     } else {
       newSimulated = currentSimulated - movement.qty;
     }
-    
+
     if (newSimulated < 0) {
       throw new Error(`Insufficient stock for ${movement.sku}`);
     }
     if (!Number.isSafeInteger(newSimulated)) {
       throw new Error("Stock exceeds safe integer limits");
     }
-    
+
     // Save the simulated state for the next movement in this batch
     changes.set(movement.sku, newSimulated);
   }
@@ -490,7 +500,6 @@ const applyMovements = (inventory, movements) => {
   }
 };
 
-
 const inv6 = makeInventory();
 applyMovements(inv6, movements);
 check("rice after batch", findProduct(inv6, "RICE-5KG").stock, 22);
@@ -501,7 +510,8 @@ const inv6b = makeInventory();
 checkThrows("bad batch throws", () => applyMovements(inv6b, badMovements));
 checkList("bad batch changed nothing", inv6b, makeInventory());
 checkThrows("unknown type", () =>
-  applyMovements(makeInventory(), [{ sku: "RICE-5KG", type: "sold", qty: 1 }]));
+  applyMovements(makeInventory(), [{ sku: "RICE-5KG", type: "sold", qty: 1 }])
+);
 
 // c) Independent self-check (like countsMatchTotal on Day 5). Without using
 //    applyMovements, work out from `movements` alone: total "in", total "out".
@@ -520,11 +530,10 @@ const totalOut = movements
   .filter((movement) => movement.type === "out")
   .reduce((sum, movement) => sum + movement.qty, 0);
 
-  applyMovements(invCheck, movements);
+applyMovements(invCheck, movements);
 const totalAfter = countStock(invCheck);
 
 check("total stock math", totalBefore + totalIn - totalOut, totalAfter);
-
 
 // ---------------------------------------------------------------
 // Exercise 7: Think (comments only)
@@ -533,16 +542,16 @@ check("total stock math", totalBefore + totalIn - totalOut, totalAfter);
 //    What would the stock end up as? (You'll fix this properly with database
 //    locks in Phase 3. For now, just describe the bug.)
 //    The stock would end up as 1
-//    Both requests read the stale value of 5, subtract 4, and write 1 back. 
-//    The system will accidentally oversell inventory 
+//    Both requests read the stale value of 5, subtract 4, and write 1 back.
+//    The system will accidentally oversell inventory
 //    because the second request doesn't see the first request deduction on time
 // 2. Exercise 4: you changed (or didn't change) a library rule for a new
 //    situation. In one line, how do you stop "small exceptions" from slowly
 //    breaking the rule that protects payment amounts?
-//    By keeping the original rule strictly for payments and creating a separate, 
+//    By keeping the original rule strictly for payments and creating a separate,
 //    specific validation function for the new context instead of loosening the shared rule.
 // 3. Day 3-4 functions returned NEW arrays. Today's functions CHANGED objects.
 //    Name one advantage and one risk of changing objects in place.
 //    It is faster because you avoid the overhead of copying large data structures
-//    but If another part of the program holds a reference to 
+//    but If another part of the program holds a reference to
 //    the same object it will unexpectedly see the reference changes, making bugs very hard to catch
