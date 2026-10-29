@@ -163,6 +163,27 @@ The roadmap is in `claude.md`.
 
 ---
 
+## Week 3
+
+### Day 1 — 29 October 2026
+
+- **Topics** : ESLint setup and rules, object and array destructuring, default values, renaming properties, rest and spread syntax, shallow copies, template strings, and string padding.
+- **What I worked on:** exercises11.js — tracing destructuring results; writing and testing parseProviderPayment(), createCharge(), parseCsvLine(), markRefunded(), and formatReceipt(); and looking up three ESLint rules.
+- **What I learned**: Destructuring defaults apply when a value is undefined, not when it is null. Spread makes a shallow copy, so nested objects can still be shared unless I copy them too. Rest collects the remaining values, which helps detect extra CSV columns. Building a payment object from selected fields helps prevent callers from setting a status the server should control. ESLint can flag code problems, but tests and validation are still needed to check payment rules.
+- **What confused me / errors I hit:**
+
+1. Destructuring defaults: I want more practice with why a default like currency = "NGN" does not replace null, and what happens if a nested property is missing.
+2. Rest, spread, and shallow copies: I want to get faster at telling when ... gathers remaining values versus copies properties, and at spotting when a nested object is still shared.
+3. I want to understand what each lint rule catches and why code can pass linting but still return a wrong result or accept invalid payment data.
+
+**Three ESLint rules reviewed in Exercise 0:**
+- eqeqeq — an error; use === and !== instead of == and !=.
+- prefer-const — an error; use const when a variable is never reassigned.
+- no-var — a warning; avoid var and use const or let instead. It is a warning because an earlier exercise deliberately used var.
+
+- **Questions for next time:** Practise the undefined versus null default rule, trace a shallow copy with a nested object, and run ESLint on the project to read its output.
+- **Committed to Git:** yes
+
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit                                                       |
