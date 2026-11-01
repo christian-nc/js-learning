@@ -177,11 +177,31 @@ The roadmap is in `claude.md`.
 3. I want to understand what each lint rule catches and why code can pass linting but still return a wrong result or accept invalid payment data.
 
 **Three ESLint rules reviewed in Exercise 0:**
+
 - eqeqeq — an error; use === and !== instead of == and !=.
 - prefer-const — an error; use const when a variable is never reassigned.
 - no-var — a warning; avoid var and use const or let instead. It is a warning because an earlier exercise deliberately used var.
 
 - **Questions for next time:** Practise the undefined versus null default rule, trace a shallow copy with a nested object, and run ESLint on the project to read its output.
+- **Committed to Git:** yes
+
+### Day 2 — 1 November 2026
+
+- **Topics** : CommonJS modules, require(), module.exports, module caching, module scope, keeping mutable data private, and the differences between CommonJS and ES modules.
+- **What I worked on:** exercises12.js and the lib/ modules — moving the test helpers into lib/testing.js, the money rules into lib/money.js, and the status normalizer into lib/status.js; testing module-loading and export mistakes; and deleting the one-off try-require.js experiment after using it.
+- **What I learned**: require() runs a module the first time it is loaded and then returns its cached exports on later calls in the same Node process. The callers receive the same exported object. module.exports is the value a CommonJS module shares; reassigning exports does not replace it. Exporting a mutable Set lets another file change the rule for every caller, so it is safer to export the function and keep the Set private.
+- **What confused me / errors I hit:**
+
+1. Error: Cannot find module 'lib/money' — I left out ./, so Node treated the path as a package or built-in module request rather than a relative project path.
+2. ReferenceError: isValidAmount is not defined — I misspelled the imported name as isValidAmout, but the rest of the file still referred to isValidAmount.
+3. TypeError: isValidAmount is not a function — replacing module.exports with exports = did not export the object; require() returned an empty object, so the function was unavailable when called. The reassignment itself did not throw at load time.
+
+**STILL UNSURE**
+
+- want more practice tracing what require() caches, why callers receive the same object, and when that cache is cleared.
+
+- **Questions for next time:** require() caching.
+- **Cleanup:** Deleted try-require.js; it was a one-off experiment.
 - **Committed to Git:** yes
 
 ## Weekly quiz scores
