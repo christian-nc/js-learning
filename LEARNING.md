@@ -204,6 +204,20 @@ The roadmap is in `claude.md`.
 - **Cleanup:** Deleted try-require.js; it was a one-off experiment.
 - **Committed to Git:** yes
 
+### Day 3 — 5 November 2026
+
+- **Topics:** try/catch/finally order (including return inside try), the error object (name, message, stack), never throwing strings (no-throw-literal), custom error classes, `cause`, catching only what you can handle, `finally` for cleanup, mapping errors to HTTP status (400 / 502 / 500).
+- **What I worked on:** exercises13.js and lib/errors.js (`ValidationError` with `field`, `ProviderError` with `provider`); `catchError`; fixed `checkThrows` in lib/testing.js so it no longer crashes on non-Error throws; `toHttpStatus`, `validatePayment`, `processBatch`, `withLock`; ESLint ignores for old files.
+- **What I learned:** `finally` runs however the block ends, even after a `return`. A custom error must call `super()` before using `this`. `instanceof` lets me tell bad input (400) from a provider failure (502) from my own bug (500). `processBatch` only catches `ValidationError` and re-throws everything else, so a bug becomes a 500 and an alert, not a rejected payment. The "already locked" check in `withLock` goes before the `try`, so a refused caller can't release someone else's lock. A timeout means "unknown", not "failed".
+- **What confused me / errors I hit:**
+
+1. ReferenceError: Must call super constructor in derived class before accessing 'this' — I set `this.name` before calling `super()`.
+2. Test 5b failed because my message said `invalid amount` instead of `Invalid amount`. Error text is part of the contract: callers and alerts may match on it.
+3. Section 8 Q2: I first answered "return false when it's not important". The real rule is about the caller: return false when the caller is asking a yes/no question and decides what to do; throw when the caller asked for a result and can't carry on without it.
+
+- **Questions for next time:** What should the customer see after a provider timeout, and how do I find out whether the charge went through?
+- **Committed to Git:** yes
+
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit                                                       |

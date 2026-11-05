@@ -4,6 +4,11 @@ import globals from "globals"; // tells ESLint that `require`, `process` etc. ex
 export default [
   js.configs.recommended,
 
+  // Global ignores: applies to the whole config
+  {
+    ignores: ["day01.js", "exercises0*.js", "inventory.js"],
+  },
+
   // 1. Configuration for .js files (CommonJS)
   {
     files: ["**/*.js"],
@@ -17,10 +22,11 @@ export default [
       "prefer-const": "error", // use const when a variable is never reassigned
       "no-var": "warn", // warn, not error: Day 2 of Week 2 used var on purpose
       "no-unused-vars": "warn",
+      "no-throw-literal": "error", // Prevents throwing non-Error values (e.g., throw "text")
     },
   },
 
-  // 2. NEW: Configuration for .mjs files (ES Modules)
+  // 2. Configuration for .mjs files (ES Modules)
   {
     files: ["**/*.mjs"],
     languageOptions: {
@@ -33,6 +39,7 @@ export default [
       "prefer-const": "error",
       "no-var": "warn",
       "no-unused-vars": "warn",
+      "no-throw-literal": "error", // Prevents throwing non-Error values (e.g., throw "text")
     },
   },
 ];
