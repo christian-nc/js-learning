@@ -6,7 +6,7 @@
 // Sections you haven't reached yet will crash, usually with
 // "Error: TODO: write <name>". Read WHICH name: it tells you where you are.
 
-const { check, checkList, checkThrows } = require("./lib/testing");
+const { check, checkList, checkThrows, catchError } = require("./lib/testing");
 const { isValidAmount } = require("./lib/money");
 const { normalizeStatus } = require("./lib/status");
 
@@ -90,21 +90,6 @@ checkList("1d throwInCatch()", throwInCatch(), [
 // ---------------------------------------------------------------
 // TODO (Exercise 2): write the contract (4 lines), then the body.
 // Spec is in the plan. Delete the "throw new Error('TODO...')" line.
-// input: fn (function) - A function that may throw an error when executed. It can throw any value, including Error objects, strings, numbers, or other types.
-// output: object - If fn throws an error, return whatever was thrown, unchanged. If fn does not throw, return a special object with name "NoError" and message "nothing was thrown".
-// bad input: Any non-function input causes a TypeError when fn() is called, which is caught and returned unchanged.
-// empty: N/A - There is no concept of an "empty" input in this context; the function always expects a callable function as input.
-function catchError(fn) {
-  try {
-    fn();
-    // If nothing was thrown, return a special object with name "NoError"
-    return { name: "NoError", message: "nothing was thrown" };
-  } catch (error) {
-    // Something was thrown
-    // Return the error object itself, which may be an Error or any other value
-    return error;
-  }
-}
 
 check(
   "2a TypeError",

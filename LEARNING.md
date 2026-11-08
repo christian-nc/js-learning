@@ -218,6 +218,30 @@ The roadmap is in `claude.md`.
 - **Questions for next time:** What should the customer see after a provider timeout, and how do I find out whether the charge went through?
 - **Committed to Git:** yes
 
+### Day 3 — 8 November 2026
+
+- **Topics:** `JSON.stringify` and `JSON.parse` quirks, reading/writing JSON files (`loadJson`, `saveJson`), handling missing vs corrupt files, validating before touching the disk, race conditions, atomic file writes (tmp + rename), and security (not leaking internal paths in 500 errors).
+- **What I worked on:** `exercises14.js` — predicting JSON serialization edge cases, writing `parseJson` (caller mistakes = 400), `loadJson` (missing vs corrupt), `saveJson` (refusing un-stringifiable data), and `recordTransaction` (load, validate, deduplicate, save). Answered Section 6 questions on concurrency, idempotency, and data loss.
+- **What I learned:** `JSON.stringify` drops `undefined` properties in objects, converts `NaN` to `null`, and turns `Date` into an ISO string. Inside arrays, `undefined` becomes `null`.
+- `JSON.parse` loses precision on large numbers and throws `SyntaxError` on single quotes.
+- A missing file (`ENOENT`) is different from a corrupt file. `loadJson` returns a fallback for missing files but throws a generic `Error` (with the `SyntaxError` as `cause`) for corrupt ones.
+- We must validate input *before* reading or writing the disk, otherwise bad input might create empty files or overwrite corrupt data.
+- Writing to a `.tmp` file and renaming it is atomic; it prevents half-written files if the power goes off.
+- A 500 error must never leak internal file paths or stack traces to the client; it only says "internal error".
+- If `loadJson` silently returned `[]` for a corrupt 10,000-record ledger, `recordTransaction` would overwrite and destroy all 10,000 records.
+- **What confused me / errors I hit:**
+- Wrong prediction 1e: I predicted `"[null, 1"]"` for `JSON.stringify([undefined, 1])`. I misplaced the quote and added a space. `JSON.stringify` adds no spaces unless you pass the `space` argument.
+- Wrong prediction 1f: I predicted `FAIL` for `checkList([undefined], [null])` because I thought it compared actual values. But `checkList` compares the *JSON text* of the values, and both stringify to `"[null]"`, so it prints `PASS`.
+- Section 6 Q2: I initially thought a warning log was enough for duplicate IDs with different amounts. It was pointed out to me that reusing an idempotency key with different parameters is a caller bug (like Stripe's `idempotency_replay`), so the caller must get an error, not just a quiet log.
+- Section 6 Q3: I said `loadJson` throws a `SyntaxError` on the next run. Actually, my own `loadJson` catches the `SyntaxError` and throws a generic `Error` with the original as `cause`.
+- Section 6 Q4: I suggested telling the caller the cause of a 500 error. That is wrong: sending internal paths and error details to a client tells an attacker how the system is built.
+Still unsure:
+1. what `list.some((item) => item.id === tx.id)` does if the ledger contains `[null]`. I know it crashes, but I want to trace exactly what error it throws and how I would safely guard against it.
+2. I understand the concept of atomic rename for safe file writes, but I am unsure how this works if the `.tmp` file and the target file are on different drives or network mounts.
+3. In Section 6 Q1, I described the race condition where one transaction is lost. I will fix this with "row locks in Phase 3". I am unsure how a database row lock actually stops two processes from overwriting each other compared to what we are doing with files.
+- **Questions for next time:** How do row locks work in SQL to prevent lost updates?
+- **Committed to Git:** yes
+
 ## Weekly quiz scores
 
 | Week | Score (out of 5) | Topics to revisit                                                       |
