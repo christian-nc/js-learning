@@ -218,7 +218,7 @@ The roadmap is in `claude.md`.
 - **Questions for next time:** What should the customer see after a provider timeout, and how do I find out whether the charge went through?
 - **Committed to Git:** yes
 
-### Day 3 — 8 November 2026
+### Day 4 — 8 November 2026
 
 - **Topics:** `JSON.stringify` and `JSON.parse` quirks, reading/writing JSON files (`loadJson`, `saveJson`), handling missing vs corrupt files, validating before touching the disk, race conditions, atomic file writes (tmp + rename), and security (not leaking internal paths in 500 errors).
 - **What I worked on:** `exercises14.js` — predicting JSON serialization edge cases, writing `parseJson` (caller mistakes = 400), `loadJson` (missing vs corrupt), `saveJson` (refusing un-stringifiable data), and `recordTransaction` (load, validate, deduplicate, save). Answered Section 6 questions on concurrency, idempotency, and data loss.
@@ -235,11 +235,23 @@ The roadmap is in `claude.md`.
 - Section 6 Q2: I initially thought a warning log was enough for duplicate IDs with different amounts. It was pointed out to me that reusing an idempotency key with different parameters is a caller bug (like Stripe's `idempotency_replay`), so the caller must get an error, not just a quiet log.
 - Section 6 Q3: I said `loadJson` throws a `SyntaxError` on the next run. Actually, my own `loadJson` catches the `SyntaxError` and throws a generic `Error` with the original as `cause`.
 - Section 6 Q4: I suggested telling the caller the cause of a 500 error. That is wrong: sending internal paths and error details to a client tells an attacker how the system is built.
-Still unsure:
+- **Still unsure:**
 1. what `list.some((item) => item.id === tx.id)` does if the ledger contains `[null]`. I know it crashes, but I want to trace exactly what error it throws and how I would safely guard against it.
 2. I understand the concept of atomic rename for safe file writes, but I am unsure how this works if the `.tmp` file and the target file are on different drives or network mounts.
 3. In Section 6 Q1, I described the race condition where one transaction is lost. I will fix this with "row locks in Phase 3". I am unsure how a database row lock actually stops two processes from overwriting each other compared to what we are doing with files.
 - **Questions for next time:** How do row locks work in SQL to prevent lost updates?
+- **Committed to Git:** yes
+
+### Day 5 — 11 November 2026
+
+- **Topics:** Building an expense tracker, converting Naira text to kobo, validating expense records, generating unique IDs, loading and saving expenses, and summarizing totals by category with reduce().
+- **What I worked on:** exercises15.js — testing nairaToKobo(), validateExpense(), nextId(), loadExpenses(), addExpense(), and summarize(); checking invalid input, corrupt files, stable timestamps, and category totals.
+- **What I learned:** Money entered as text needs careful validation before converting to kobo. Expense validation should return a clean object containing only allowed fields. The next ID must be based on the highest existing ID, not the number of records, so deleted IDs are not reused. I also need to keep caller input errors separate from problems in our own saved file.
+- **What confused me / errors I hit:**
+- reduce()'s starting value: I want to get comfortable with the shorthand callback and where the initial accumulator value (such as 0 or {}) belongs.
+- Updating an object inside reduce(): I need more practice remembering to use the accumulator's property, such as acc[category], rather than leaving out acc..
+- Returning the accumulator: I want to remember why the callback must return acc after updating it, or the next iteration will not receive the object I built.
+- **Questions for next time:** Practise tracing reduce() with an object accumulator one iteration at a time.
 - **Committed to Git:** yes
 
 ## Weekly quiz scores

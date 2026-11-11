@@ -8,4 +8,7 @@ node_modules/
 !.env.example
 
 # Test files made by exercises
-tmp-day14/
+tmp-day*/
+
+# My own expense data (Days 5-6)
+expenses.json

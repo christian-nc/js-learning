@@ -13,6 +13,7 @@ const { check, checkList, catchError } = require("./lib/testing");
 const { isValidAmount } = require("./lib/money");
 const { normalizeStatus } = require("./lib/status");
 const { ValidationError } = require("./lib/errors");
+const { saveJson, loadJson } = require("./lib/files");
 
 // Today's test files go in a scratch folder next to this file. It is deleted
 // and made again at the start of every run, so each run starts clean.
@@ -171,29 +172,6 @@ fs.writeFileSync(fileIn("empty.json"), "");
 // console.log(missingError.code, "|", missingError.message);
 // What is .code? ENOENT
 
-// TODO (Exercise 3): contract, then body. Spec is in the plan.
-// Input: a file path and a fallback value.
-// Output: the parsed JSON from the file, or the fallback if the file is missing.
-// Bad Input: if the file exists but contains invalid JSON, throw an Error with a message indicating that the JSON is corrupt and include the original error as the cause. If there is any other error reading the file, rethrow it.
-// Empty Input: if the file is empty, it is considered corrupt and will throw an Error with a message indicating that the JSON is corrupt.
-function loadJson(filePath, fallback) {
-  let text;
-  try {
-    text = fs.readFileSync(filePath, "utf8");
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return fallback;
-    }
-    throw error;
-  }
-
-  try {
-    return JSON.parse(text);
-  } catch (error) {
-    throw new Error(`Corrupt JSON in ${filePath}`, { cause: error });
-  }
-}
-
 checkList("3b a good file", loadJson(fileIn("good.json"), []), [
   { id: "tx_1", amount: 5000 },
 ]);
@@ -250,18 +228,6 @@ check("3f reading a folder: the error escapes", folder.code, "EISDIR");
 // ---------------------------------------------------------------
 // Section 4: saveJson - write a file, and never write nothing
 // ---------------------------------------------------------------
-// TODO (Exercise 4): contract, then body. Spec is in the plan.
-// Input: a file path and a value to save as JSON.
-// Output: nothing (undefined).
-// Bad Input: if the value is not valid JSON, throw an Error with a message indicating that there is nothing to save. Do not write the file.
-// Empty Input: if the value is undefined, it is considered invalid and will throw an Error with a message indicating that there is nothing to save.
-function saveJson(filePath, data) {
-  const text = JSON.stringify(data, null, 2);
-  if (typeof text !== "string") {
-    throw new Error("Nothing to save: data is not JSON");
-  }
-  fs.writeFileSync(filePath, text + "\n", "utf8");
-}
 
 const saved = fileIn("saved.json");
 check(
@@ -481,23 +447,23 @@ check(
 // Process B loads [tx_1, tx_2] and is about to add tx_6. Both processes validate their transactions, then both write their new arrays back to the file.
 // At the end it will contain either [tx_1, tx_2, tx_5] or [tx_1, tx_2, tx_6], depending on which process writes last. The other transaction will be lost with no error.
 //
-// 2. Quietly ignoring duplicates with a different amount is wrong for data integrity. 
-// Reusing an idempotency key with different parameters is a caller bug (like Stripe's idempotency_replay error). 
+// 2. Quietly ignoring duplicates with a different amount is wrong for data integrity.
+// Reusing an idempotency key with different parameters is a caller bug (like Stripe's idempotency_replay error).
 // The function should throw a ValidationError (or return a 400 error) so the caller knows immediately that they made a mistake, rather than just logging a quiet warning.
 //
-// 3. If the power goes off while the file is being written, 
-// ledger.json could be empty or half-written JSON. 
-// On the next run, JSON.parse throws a SyntaxError, 
-// but loadJson catches it and throws a generic Error with the message "Corrupt JSON in ...", 
-// keeping the original SyntaxError in the cause property. 
+// 3. If the power goes off while the file is being written,
+// ledger.json could be empty or half-written JSON.
+// On the next run, JSON.parse throws a SyntaxError,
+// but loadJson catches it and throws a generic Error with the message "Corrupt JSON in ...",
+// keeping the original SyntaxError in the cause property.
 // Writing to ledger.json.tmp first and then renaming it to ledger.json is safer because the rename operation is atomic; whatever happens, the file is either the complete old version or the complete new one.
 //
-// 4. JSON.parse will throw a SyntaxError in both cases. 
-// The difference is who owns the data. If the caller sent it, it is a 400 Bad Request (their mistake). 
-// If we wrote it, it is a 500 Internal Server Error (our mistake). For a 500, we must only return a generic "internal error" message to the caller to avoid leaking internal file paths and system details to attackers; 
+// 4. JSON.parse will throw a SyntaxError in both cases.
+// The difference is who owns the data. If the caller sent it, it is a 400 Bad Request (their mistake).
+// If we wrote it, it is a 500 Internal Server Error (our mistake). For a 500, we must only return a generic "internal error" message to the caller to avoid leaking internal file paths and system details to attackers;
 // the actual file path and SyntaxError must be logged server-side.
 //
-// 5. If loadJson silently returned [] for a corrupt 10,000-record ledger, 
-// recordTransaction would push the new transaction into an empty array and save [{ new_tx }] to disk, 
-// completely overwriting and destroying the original 10,000 records. 
+// 5. If loadJson silently returned [] for a corrupt 10,000-record ledger,
+// recordTransaction would push the new transaction into an empty array and save [{ new_tx }] to disk,
+// completely overwriting and destroying the original 10,000 records.
 // Throwing an error forces the program to stop, preserving the corrupt file on disk so a developer can investigate and recover the data instead of silently losing it.
