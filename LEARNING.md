@@ -261,6 +261,7 @@ The roadmap is in `claude.md`.
 - **What I learned:** runCommand() returns an array of output lines instead of printing, which keeps command behavior separate from the terminal and makes it testable. main() reads process.argv.slice(2), prints the returned lines, and sets an exit code. A ValidationError is a user-input problem (exit code 1), while an unexpected error such as corrupt saved JSON is an internal/data problem (exit code 2). isDigits() must check an ID before Number() converts it, because Number() accepts formats that the CLI should reject. require.main === module makes main() run only when expenses.js is started directly, not when another file requires it for tests.
 - **What confused me / errors I hit:**
 I claimed the work was done without checking whether the exercises16.js test file had finished running. I need to wait for the test command to complete and check its final output before saying the work is done.
+- require.main === module and "a missing import fails at the call, not the require"
 - **Questions for next time:** erify the full exercises16.js result and manually confirm the CLI's success, user-error, and unexpected-error exit codes.
 - **Committed to Git:** yes
 
@@ -270,3 +271,4 @@ I claimed the work was done without checking whether the exercises16.js test fil
 | ---- | ---------------- | ----------------------------------------------------------------------- |
 | 1    | 5                | -                                                                       |
 | 2    | 4.5              | reduce() without an initial value; naming the bug before fixing it (Q5) |
+| 3    | 4.5              | equire.main === module and "a missing import fails at the call, not the require
