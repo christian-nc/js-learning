@@ -190,12 +190,25 @@ check(
 // ---------------------------------------------------------------
 // Section 3: Think (comments only). Questions are in the plan.
 // ---------------------------------------------------------------
-// 1.
+// 1. The date will show 8 November because 00:30 on 9 November in Lagos is actually on 8 November in UTC.
+// Using .slice(0, 10) removes the first 10 characters giving just the UTC date, not the local date
+// To fix it: I could convert the string back into a javascript date object and use toLocaleDateString() passing { timeZone: "Africa/Lagos" } in the options.
 //
-// 2.
+// 2. addExpense cant refuse duplicates because the client does not send an ID. The server cant know
+// if a request is a new expense or a retry of a previous one.
+// The API solution is for the client to generate a unique identifier like a UUID for the specific action
+// and send it in the headers or body. This is idempotency key. The server stores this key and a retry will cause the server to see the same key, realize it has already processed it and returns the original success response
 //
-// 3.
+// 3. Reason 1 (The Audit Trail): A month later, an auditor might ask,
+// "What happened to payment #2?" If it was deleted, the history is gone, and it looks like the system is broken but if it was kept and add a
+// refund record, the timeline clearly shows: Payment received -> Payment refunded.
+// Reason 2 The payment provider (e.g., Paystack, Stripe, or a bank) has already recorded
+// the original payment in their immutable ledger and included it in their reports. You cannot delete it on their end. To make your internal ledger match the provider's
+// ledger and balance your accounts, you must record the refund as a new, separate transaction.
 //
-// 4.
+// 4. Exit code 0 universally means "success". Non-zero codes mean "failure". Using different non-zero codes (1 for user/typing errors,
+// 2 for system/data errors) allows the calling environment to understand why the program failed.
+// Automated systems read exit codes
 //
-// 5.
+// 5. It is a bad security practice because leaking internal file paths and stack traces gives malicious users
+// maps of internal infrastructure.

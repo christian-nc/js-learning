@@ -252,6 +252,16 @@ The roadmap is in `claude.md`.
 - Updating an object inside reduce(): I need more practice remembering to use the accumulator's property, such as acc[category], rather than leaving out acc..
 - Returning the accumulator: I want to remember why the callback must return acc after updating it, or the next iteration will not receive the object I built.
 - **Questions for next time:** Practise tracing reduce() with an object accumulator one iteration at a time.
+- **Committed to Git:** 
+
+### Day 6 — 15 November 2026
+
+- **Topics:** Command-line arguments with process.argv, separating command handling from terminal input/output, findIndex() and splice(), standard output and standard error, process exit codes, environment variables, and the require.main === module guard.
+- **What I worked on:** expenses.js — implementing runCommand() for add, list, total, remove, and help; connecting it to the expense helpers in lib/expenses.js; and keeping main() as the small terminal-facing function.
+- **What I learned:** runCommand() returns an array of output lines instead of printing, which keeps command behavior separate from the terminal and makes it testable. main() reads process.argv.slice(2), prints the returned lines, and sets an exit code. A ValidationError is a user-input problem (exit code 1), while an unexpected error such as corrupt saved JSON is an internal/data problem (exit code 2). isDigits() must check an ID before Number() converts it, because Number() accepts formats that the CLI should reject. require.main === module makes main() run only when expenses.js is started directly, not when another file requires it for tests.
+- **What confused me / errors I hit:**
+I claimed the work was done without checking whether the exercises16.js test file had finished running. I need to wait for the test command to complete and check its final output before saying the work is done.
+- **Questions for next time:** erify the full exercises16.js result and manually confirm the CLI's success, user-error, and unexpected-error exit codes.
 - **Committed to Git:** yes
 
 ## Weekly quiz scores
